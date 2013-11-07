@@ -105,6 +105,6 @@ exports.getImdbFromString = function(string, callback) {
         });
     }
     else {
-        callback(false)
+        callback(false);
     }
 };

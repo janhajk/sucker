@@ -27,7 +27,7 @@ var auth = express.basicAuth(function(user, pass, callback) {
 
 app.get('/', auth, function(req, res) {
     fs.readFile(__dirname + '/index.html', 'utf-8', function (err, data) {
-                        res.send(data);
+        res.send(data);
     });
 });
 
@@ -69,7 +69,7 @@ app.get('/site/rss/:type', auth, function(req, res) {
  */
 app.get('/site/links', auth, function(req, res){
   var request = require('request');
-  request(req.query['url'], function(error, response, body) {
+  request(req.query.url, function(error, response, body) {
     res.json(ul.getLinksFromString(body));
   });
 });
