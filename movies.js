@@ -12,12 +12,14 @@ var catchAllInfos = function(titles, callback) {
     (function getInfo(i){
         setTimeout(function(){
           getTomatoesFromTitle(Object.keys(titles)[i-1], function(err, info, title){
+              var rightInfo;
               if (err !== undefined) {
                   console.log(err);
                   titles[title].info = {};
               }
               else {
-                titles[title].info = info[getRightInfo(titles[title].year, info)];
+                rightInfo = getRightInfo(titles[title].year, info);
+                titles[title].info = (info[rightInfo] !== undefined) ? info[rightInfo] : {}; 
               }
               counter++;
               if (counter === Object.keys(titles).length) {
