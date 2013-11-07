@@ -79,11 +79,8 @@ exports.getFilmTitleFromString = getFilmTitleFromString;
 
 exports.getResFromString = function(string) {
     var results = string.match(/720p|1080p|480p|hdtv/i);
-    if (results !== null) {
-        var res = results[0];
-        if (res === 'hdtv') res = '720p';
-        return res;
-    }
+    if (results !== null)
+        return results[0];
     return false;
 };
 
