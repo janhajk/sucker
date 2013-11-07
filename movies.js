@@ -16,14 +16,9 @@ var catchAllInfos = function(titles, callback) {
                   console.log(err);
                   titles[title].info = {};
               }
-              else 
-                for (var key in info) {
-                    if (info[key].year === titles[title].year) {
-                        titles[title].info = info[key];
-                        break;
-                    }
-                    titles[title].info = {};
-                }
+              else {
+                titles[title].info = info[getRightInfo(info[key].year, info[key])];
+              }
               counter++;
               if (counter === Object.keys(titles).length) {
                   callback(titles);
@@ -35,6 +30,14 @@ var catchAllInfos = function(titles, callback) {
 };
 exports.catchAllInfos = catchAllInfos;
 
+var getRightInfo = function(year, info) {
+    for (var key in info) {
+        if (year === info[key].year)
+            return key;
+    }
+    return 0;
+};
+exports.getRightInfo = getRightInfo;
 
 var getTomatoesFromTitle = function(title, callback) {
     tomatoe.search(title, function(err, info) {
