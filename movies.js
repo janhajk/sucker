@@ -17,7 +17,7 @@ var catchAllInfos = function(titles, callback) {
                   titles[title].info = {};
               }
               else {
-                titles[title].info = info[getRightInfo(info[key].year, info[key])];
+                titles[title].info = info[getRightInfo(titles[title].year, info)];
               }
               counter++;
               if (counter === Object.keys(titles).length) {
