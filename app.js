@@ -21,7 +21,7 @@ app.configure(function(){
 
 // Asynchronous
 var auth = express.basicAuth(function(user, pass, callback) {
- var result = (user === 'user1' && pass === 'anKkFssc7ACA');
+ var result = (user === config.username && pass === config.password);
  callback(null /* error */, result);
 });
 

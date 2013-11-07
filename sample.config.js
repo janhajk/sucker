@@ -1,3 +1,6 @@
+exports.username = 'user1';
+exports.password = 'VfKnRe$7gdBf';
+
 exports.database     = "mongodb://localhost/sucker";
 exports.port         = 27017;
 exports.cookieSecret = "1234";
