@@ -303,7 +303,7 @@
 
         var getLinksFromString = function(string) {
             var ids = [];
-            var schemas = ['ul\.to/([a-zA-Z0-9-]{8})', 'uploaded\.net/file/([a-zA-Z0-9-]{8})'];
+            var schemas = ['ul\\.to/([a-zA-Z0-9-]{8})', 'uploaded\\.net/file/([a-zA-Z0-9-]{8})'];
             var regex = new RegExp(schemas.join('|'), 'gim');
             var link;
             while ((link = regex.exec(string)) !== null) {

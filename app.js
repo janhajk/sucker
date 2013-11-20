@@ -1,13 +1,13 @@
-var config   = require('./config.js');
+var config   = require(__dirname + '/config.js');
 var express  = require('express');
 var path     = require('path');
 var fs       = require('fs');
 
-var ul       = require('/lib/uploaded.js');
-var utils    = require('/lib/utils.js');
-var movie    = require('/lib/movies.js');
+var ul       = require(__dirname + '/lib/uploaded.js');
+var utils    = require(__dirname + '/lib/utils.js');
+var movie    = require(__dirname + '/lib/movies.js');
 
-var db       = require('/database/database.js');
+var db       = require(__dirname + '/database/database.js');
 
 var app = express();
 app.configure(function(){
@@ -112,27 +112,31 @@ db.connect(function(){
 });
 
 var rssGet = function(type, callback) {
-    var Scrapper = require('/lib/scrapper.js');
+    var Scrapper = require(__dirname + '/lib/scrapper.js');
     var items = [];
     var feedCount = config.feeds[type].feeds.length;
     var feedcounter = 0;
-    for (var i = 0; i < feedCount; i++) {
-          Scrapper.scrap({url:config.feeds[type].feeds[i]}, function (err, rss) {
-            if (err === null) {
-                for(var i in rss.items) {
-                  for (var title in config.feeds[type].queries) {
-                    var regex = new RegExp(config.feeds[type].queries[title].title, 'g'); 
+    var processItems = function(err, rss) {
+        if (err === null) {
+            var i, title, regex;
+            for (i in rss.items) {
+                for (title in config.feeds[type].queries) {
+                    regex = new RegExp(config.feeds[type].queries[title].title, 'g');
                     if (regex.exec(rss.items[i].title)) {
-                      items.push(rss.items[i]);
+                        items.push(rss.items[i]);
                     }
-                  }
                 }
             }
-            feedcounter++;
-            if (feedcounter === feedCount) {
-                callback(items);
-            }
-          });
+        }
+        feedcounter++;
+        if (feedcounter === feedCount) {
+            callback(items);
+        }
+    };
+    for (var i = 0; i < feedCount; i++) {
+        Scrapper.scrap(config.feeds[type].feeds[i], function(err, rss) {
+            processItems(err, rss);
+        });
     }
 };
 
