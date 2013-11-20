@@ -1,7 +1,7 @@
 {
-  "name": "dltroll",
-  "description": "a simple nodeJS downloading app",
-  "version": "0.0.1",
+  "name": "sucker",
+  "description": "a simple nodeJS downloading app for uploaded.net/ul.to",
+  "version": "0.0.2",
   "scripts": {
           "start": "node app.js"
   },
