@@ -14,4 +14,4 @@ exports.connect = function(callback) {
         });
 };
 
-exports.feed = require('./feedDB.js');
+exports.movie = require('./movieDb.js');

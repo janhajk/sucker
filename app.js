@@ -7,6 +7,8 @@ var ul       = require(__dirname + '/uploaded.js');
 var utils    = require(__dirname + '/utils.js');
 var movie    = require(__dirname + '/movies.js');
 
+var db       = require(__dirname + '/database/database.js');
+
 var app = express();
 app.configure(function(){
   app.use(express.compress());
@@ -35,33 +37,19 @@ app.get('/', auth, function(req, res) {
 
 app.get('/site/rss/:type', auth, function(req, res) {
     var type = req.param('type');
+    if (type === 'TV') {
     rssGet(type, function(items){
-      // TV Shows
-      if (type === 'TV') {
-          res.json(items);
-          return;
-      }
-      // Movies
-      var title, movies = {}, i;
-      for (i in items) {
-          title = movie.getFilmTitleFromString(items[i].title);
-          title = title.toLowerCase();
-          if (movies[title] === undefined)
-              movies[title] = {
-                  info  : [],
-                  links : [],
-                  year  : parseInt(movie.yearFromString(items[i].title)),
-                  resolutions: []
-                };
-          movies[title].links.push(items[i]);
-          var resolution = movie.getResFromString(items[i].title);
-          if (resolution && movies[title].resolutions.indexOf(resolution) === -1)
-                movies[title].resolutions.push(resolution);
-      }      
-      movie.catchAllInfos(movies, function(infos){
-          res.json(infos);
-      });
+        // TV Shows
+        res.json(items);
+        return;
     });
+    }
+    else {
+        // Movies
+        db.movie.get(function(err, movies){
+            res.json(movies);
+        });
+    }
 });
 
 /*
@@ -117,7 +105,11 @@ app.get('/:title/info', auth, function(req, res) {
     });
 });
 
-app.listen(app.get('port'));
+
+
+db.connect(function(){
+    app.listen(app.get('port'));
+});
 
 var rssGet = function(type, callback) {
     var Scrapper = require(__dirname + '/scrapper.js');

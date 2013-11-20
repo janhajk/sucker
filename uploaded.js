@@ -57,7 +57,6 @@ exports.fileExists = fileExists;
 
 
 var download = function(id, callback) {
-    var id = validId(req.param('id'));
         if (!id) {
           callback(false);
         }

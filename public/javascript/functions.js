@@ -26,42 +26,45 @@
     
     var loadRssMovies = function(type) {
       $.getJSON('/site/rss/Movies', function(json) {
-        var div, i, poster, abc;
-        abc = Object.keys(json);
-        abc.sort();
-        for (i = 0; i < abc.length; i++) {
-          poster = (Object.keys(json[abc[i]].info).length ? json[abc[i]].info.posters.thumbnail : '');
-          div = thumbPoster(poster, abc[i]); 
+        var div, i, poster;
+        json.sort(function(a, b) {
+            a = new Date(a.lastUpdate);
+            b = new Date(b.lastUpdate);
+            return a>b ? -1 : a<b ? 1 : 0;
+        });
+        for (i = 0; i < json.length; i++) {
+          poster = json[i].info.posters!==undefined ? json[i].info.posters.thumbnail : '';
+          div = thumbPoster(poster, json[i].title);
           div.style.float    = 'left';
           div.style.cursor   = 'pointer';
-          div.onclick        = (function(title, info, image, links) {
+          div.onclick        = (function(title, info, image, sites) {
               return function() {
                 $('#content').tabs({ active: 1 });  // Jump to tab 1 > links
                 $('#linksDetails').empty();
                 var hasInfo = Object.keys(info).length;
                 $('#linksDetails').append(divMovieInfo(
-                        hasInfo ? info.title    : title,
+                        title,
                         image,
-                        hasInfo ? info.runtime  : '?',
-                        hasInfo ? info.year     : '?',
+                        info.runtime ? info.runtime : '?',
+                        info.year,
                         'imdb-Rating',
-                        hasInfo ? info.synopsis : 'no synopsis',
+                        info.synopsis === '' ? 'no synopsis' : info.synopsis,
                         'actors'
                 ));
                 var divLink;
-                for (var key in links) {
+                for (var key in sites) {
                     divLink = document.createElement('div');
                     divLink.className   = 'linkParseSite';
-                    divLink.textContent = links[key].title;
+                    divLink.textContent = sites[key].title;
                     divLink.onclick     = (function(link){
                         return function() {
                             parseData(link);
                         };
-                    })(links[key].link);
+                    })(sites[key].link);
                     $('#linksDetails').append(divLink);
                 }
               };
-          })(abc[i], json[abc[i]].info, poster, json[abc[i]].links);
+          })(json[i].title, json[i].info, poster, json[i].sites);
           $('#rss_'+type).append(div);
         }
       });
@@ -95,11 +98,12 @@
    };
 
    var parseData = function(data) {
+     var ids;
      setStatus('start looking for links...');
       $( '#content' ).tabs({ active: 1 });  // Jump to tab 1 > links
      if (validateURL(data)) {
        if (isUploaded(data)) { // is uploaded.net Link
-         var ids = getLinksFromString(data);
+         ids = getLinksFromString(data);
        }
        else { // is link to page that may contain uploaded.net links > rip Site
          ripSite(data);
@@ -107,10 +111,10 @@
        }
      }
      else if (/^[a-zA-Z0-9-]{8}/i.test(data)) {  // is ul.to ID
-       var ids = {data:data.substr(0,8)};
+       ids = {data:data.substr(0,8)};
      }
      else {   // is string that may contain ul.to links
-       var ids = getLinksFromString(data);
+       ids = getLinksFromString(data);
      }
      parseIDs(ids);
    };
@@ -122,10 +126,18 @@
       });
    };
 
+    /**
+     * checks if url is uploaded.net link
+     * @param {string} url A url-string
+     */
     var isUploaded = function(url) {
       return /.*(ul\.to)|(uploaded\.net\/file)\/([a-zA-Z0-9-]{8}).*/gi.test(url) ? true : false;
     };
 
+
+    /**
+     * 
+     */
     var parseIDs = function(ids) {
        var links = '';
        var files = [];
@@ -140,7 +152,6 @@
        }
        $('#data').val(links);
        $('#content').append('<table id="links"></table>');
-       curfile = 0;
        var defs = [];
        var addFile = function(info) {
          if (info !== false) {
@@ -161,6 +172,11 @@
     };
 
 
+    /**
+     * Table with ul.to links that have been checked
+     * 
+     * @param {array} fileList an Array containing all ul.to links
+     */
     var makeTableChecked = function(fileList) {
       var extensions = ['mp4', 'mkv', 'avi', 'rar', ''];
       var rowcols    = ['link', 'size', 'extension', 'jd', 'cloud'];
@@ -199,9 +215,11 @@
           cloud.className = 'icon iconcloud';
           cloud.id = fileList[i].id;
           cloud.title = 'download to server';
-          cloud.onclick = function(){
-              grabUl(fileList[i].id);
-          };
+          cloud.onclick = (function(i){
+              return function() {
+                  grabUl(fileList[i].id);
+              };
+          })(i);
           tds[4].appendChild(cloud);
           
           for (var key in tds)
@@ -212,10 +230,9 @@
       }
       $('#paste').html(links);
     };
-    });
-
-
-    var jDLink = function(id) {
+    
+ 
+     var jDLink = function(id) {
         var input = document.createElement('div');
         input.className = 'icon iconjd';
         input.onclick = function() {
@@ -316,6 +333,8 @@
         div.appendChild(poster);
         div.appendChild(divOuter);
         return div;
-    };
-
+    };   
+    
+    
+    });
 })();
