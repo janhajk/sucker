@@ -106,6 +106,16 @@ app.get('/:title/info', auth, function(req, res) {
 });
 
 
+/**
+ * Hides Movie from View
+ */
+app.get('/movie/:id/hide', auth, function(req, res) {
+    db.movie.hide(req.param('id'), function(success){
+        res.json(success);
+    });
+});
+
+
 
 db.connect(function(){
     app.listen(app.get('port'));

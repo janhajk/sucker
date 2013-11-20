@@ -202,3 +202,10 @@ td {
     font-size: 0.8em;
     clear:both;
 }
+
+.hyperlink {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+    font-size: 0.8em;
+}

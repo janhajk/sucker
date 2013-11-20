@@ -42,7 +42,8 @@ var MovieSchema = mongoose.Schema({
     }],
     resolutions: [],
     lastUpdate: {type: Date, index: true},
-    dateAdded: Date
+    dateAdded: Date,
+    display: {type: Boolean, default:true, index: true}
 });
 
 var Movie = mongoose.model('Movie', MovieSchema);
@@ -68,8 +69,11 @@ exports.add = function(title, info, callback) {
 };
 
 
+/**
+ * Reads all Movies from the Database that are on 'display'
+ */
 exports.get = function(callback) {
-    Movie.find({}, function (err, movies) {
+    Movie.find({$or: [{display:true}, {display: undefined}]}, function (err, movies) {
         callback(err, movies);
     });
 };
@@ -89,6 +93,12 @@ exports.exists = function(movieInput, callback) {
             callback(false, movieInput);
         }
         return true;
+    });
+};
+
+exports.hide = function(movieId, callback) {
+    Movie.findByIdAndUpdate(movieId, { $set: { display: false }}, function(){
+        callback(true);   
     });
 };
 

@@ -63,19 +63,21 @@
                     div = thumbPoster(poster, json[i].title);
                     div.style.float = 'left';
                     div.style.cursor = 'pointer';
-                    div.onclick = (function(title, info, image, sites) {
+                    div.onclick = (function(_id, title, info, image, sites) {
                         return function() {
                             $('#content').tabs({
                                 active: 1
-                            }); // Jump to tab 1 > links
+                            }); // Jump to tab 1 > links; tabs start with 0 = first tab
                             $('#linksDetails').empty();
-                            var hasInfo = Object.keys(info).length;
                             $('#linksDetails').append(divMovieInfo(
-                            title,
-                            image,
-                            info.runtime ? info.runtime : '?',
-                            info.year, 'imdb-Rating',
-                            info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors'));
+                                _id,
+                                title,
+                                image,
+                                info.runtime ? info.runtime : '?',
+                                info.year,
+                                'imdb-Rating',
+                                info.synopsis === '' ? 'no synopsis' : info.synopsis,
+                                'actors'));
                             // Site-Links for ripping links
                             var divLink;
                             for (var key in sites) {
@@ -90,7 +92,7 @@
                                 $('#linksDetails').append(divLink);
                             }
                         };
-                    })(json[i].title, json[i].info, poster, json[i].sites);
+                    })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites);
                     $('#rss_' + type).append(div);
                 }
             });
@@ -338,7 +340,7 @@
 
         };
 
-        var divMovieInfo = function(title, posterUrl, runtime, year, imdb, synopsis, actors) {
+        var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis, actors) {
             var div = document.createElement('div');
             div.className = 'movieDigest';
             var divOuter = document.createElement('div');
@@ -350,7 +352,14 @@
 
             var divDetails = document.createElement('div');
             divDetails.className = 'movieInfoLine';
-            divDetails.textContent = 'Length: ' + runtime + 'min, Year: ' + year;
+            divDetails.textContent = 'Length: ' + runtime + 'min, Year: ' + year + ', ';
+            var spanRemove = document.createElement('span');
+            spanRemove.textContent = 'remove';
+            spanRemove.className = 'hyperlink';
+            spanRemove.onclick = function() {
+                $.getJSON('/movie/' + _id + '/hide', function(data){Status.set('Movie will not be shown anymore!')});
+            };
+            divDetails.appendChild(spanRemove);
 
             var divSynopsis = document.createElement('div');
             divSynopsis.className = 'movieInfoLine';
