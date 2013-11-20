@@ -1,4 +1,3 @@
-var config = require(__dirname + '/../config.js');
 var mongoose = require('mongoose');
 
 var MovieSchema = mongoose.Schema({

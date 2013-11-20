@@ -3,9 +3,9 @@ var express  = require('express');
 var path     = require('path');
 var fs       = require('fs');
 
-var ul       = require(__dirname + '/uploaded.js');
-var utils    = require(__dirname + '/utils.js');
-var movie    = require(__dirname + '/movies.js');
+var ul       = require(__dirname + '/lib/uploaded.js');
+var utils    = require(__dirname + '/lib/utils.js');
+var movie    = require(__dirname + '/lib/movies.js');
 
 var db       = require(__dirname + '/database/database.js');
 
@@ -112,7 +112,7 @@ db.connect(function(){
 });
 
 var rssGet = function(type, callback) {
-    var Scrapper = require(__dirname + '/scrapper.js');
+    var Scrapper = require(__dirname + '/lib/scrapper.js');
     var items = [];
     var feedCount = config.feeds[type].feeds.length;
     var feedcounter = 0;

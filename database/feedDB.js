@@ -1,6 +1,6 @@
 var config = require(__dirname + '/../config.js');
 var mongoose = require('mongoose');
-var Scrapper = require(__dirname + '/../scrapper.js');
+var Scrapper = require(__dirname + '/../lib/scrapper.js');
 
 var feedSchema = mongoose.Schema({
         url: String,
