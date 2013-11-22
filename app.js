@@ -65,7 +65,6 @@ app.post('/site/links', auth, function(req, res) {
     for (var i = 0; i < fileCount; i++) {
         request(req.body.sites[i].link, function(error, response, body) {
             content.push(body);
-            console.log(body);
             curFile++;
             if (curFile++ === fileCount) {
                 res.json(ul.getLinksFromString(content.join(' ')));
