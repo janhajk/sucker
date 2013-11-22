@@ -104,6 +104,10 @@ td {
   cursor: pointer;
 }
 
+#content {
+    position: absolute;
+}
+
 .ui-tabs .ui-tabs-nav li a {
     padding: .3em 0.7em;
 }
@@ -208,4 +212,19 @@ td {
     text-decoration: underline;
     color: blue;
     font-size: 0.8em;
+}
+
+.hyperlinkTv {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-size: 0.6em;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 2px;
+}
+
+.hyperlinkTv:hover {
+    text-decoration: underline;
+    color: red;
 }

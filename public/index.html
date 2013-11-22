@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sucker</title>
+        
+        <link rel="shortcut icon"    href="/images/favicon_57x57.png" type="image/x-icon" />
+        <link rel="icon"             href="/images/favicon_57x57.png" />
+        <link rel="apple-touch-icon" href="images/favicon_57x57.png" />
+        <!--<link rel="apple-touch-icon" href="/images/favicon__72x72.png" sizes="72x72" />-->
+        <!--<link rel="apple-touch-icon" href="/images/favicon__114x114.png" sizes="114x114" />-->
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script src="javascript/functions.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+        
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        
+    </head>
+    <body>
+        <div id="status"></div>
+        <div id="header">
+        </div>
+        <div id="content">
+            <ul>
+                <li><a href="#tabs-1"><div class="icontroll" id="logo"></div></a></li>
+                <li><a href="#tabs-2">links</a></li>
+                <li><a href="#tabs-3">files</a></li>
+                <li><a href="#tabs-4">Parser</a></li>
+            </ul> 
+            <div id="tabs-1" class="box">
+                <div class="divheader">Latest TV Shows</div><div id="rss_TV">
+                </div>
+                <div class="divheader">Latest Movies</div><div id="rss_Movies">
+                </div>
+            </div>
+            <div id="tabs-2" class="box">
+                <div id="linksDetails">
+                </div>
+                <div id="rssLinks">
+                    <ul>
+                        <li><a href="#tabs-links-mp4">mp4</a></li>
+                        <li><a href="#tabs-links-mkv">mkv</a></li>
+                        <li><a href="#tabs-links-avi">avi</a></li>
+                        <li><a href="#tabs-links-rar">rar</a></li>
+                        <li><a href="#tabs-links-">*</a></li>
+                    </ul>
+                    <div id="tabs-links-mp4" class="box">
+                        <table><tbody></tbody></table>
+                    </div>
+                    <div id="tabs-links-mkv" class="box">
+                        <table><tbody></tbody></table>
+                    </div>
+                    <div id="tabs-links-avi" class="box">
+                        <table><tbody></tbody></table>
+                    </div>
+                    <div id="tabs-links-rar" class="box">
+                        <table><tbody></tbody></table>
+                    </div>
+                    <div id="tabs-links-" class="box">
+                        <table><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>            
+            <div id="tabs-3" class="box">
+                <div id="rss_files">
+                    <table>
+                        <thead><tr><th>Filename</th><th width="40"></th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="tabs-4" class="box">
+                <textarea id="data"></textarea>
+                <textarea id="paste"></textarea>
+                <div id="bParse">
+                    <button type="button" id="go">parse</button>
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
+        <script>
+            (function() {
+                $(document).ready(function() {
+                    // Make jqQuery.UI tabs
+                    $('#content').tabs();
+                    $('#rssLinks').tabs();
+                });
+            })();
+        </script>
+    </body>
+</html>

@@ -28,31 +28,26 @@ var auth = express.basicAuth(function(user, pass, callback) {
 });
 
 app.get('/', auth, function(req, res) {
-    fs.readFile(__dirname + '/index.html', 'utf-8', function (err, data) {
+    fs.readFile(__dirname + '/public/index.html', 'utf-8', function (err, data) {
         res.send(data);
     });
 });
 
 
 
-app.get('/site/rss/:type', auth, function(req, res) {
-    var type = req.param('type');
-    if (type === 'TV') {
-    rssGet(type, function(items){
-        // TV Shows
+app.get('/tv', auth, function(req, res) {
+    utils.rssGet('TV', function(items) {
         res.json(items);
-        return;
     });
-    }
-    else {
-        // Movies
-        db.movie.get(function(err, movies){
-            res.json(movies);
-        });
-    }
 });
 
-/*
+app.get('/movies', auth, function(req, res) {
+    db.movie.get(function(err, movies) {
+        res.json(movies);
+    });
+});
+
+/**
  * rip a sites content and return all uploaded.net links
  */
 app.get('/site/links', auth, function(req, res){
@@ -62,14 +57,14 @@ app.get('/site/links', auth, function(req, res){
   });
 });
 
-/*
+/**
  * gets a List of all downloaded Files on server
  */
 app.get('/file', auth, function(req, res){
     res.json(utils.getDownloadedFiles());
 });
 
-/*
+/**
  * Send single file to client for downloading
  */
 app.get('/file/:filename/download', auth, function(req, res){
@@ -77,7 +72,7 @@ app.get('/file/:filename/download', auth, function(req, res){
   res.download(file);
 });
 
-/*
+/**
  * Checks if a File still exists on File-Hoster and returns info about file
  */
 app.get('/ul/:id/check', auth, function(req, res){
@@ -96,16 +91,6 @@ app.get('/ul/:id/grab', auth, function(req, res){
 });
 
 
-/*
- * fetch Movie Info (IMDB/Tomatoes, Poster)
- */
-app.get('/:title/info', auth, function(req, res) {
-    movie.getTomatoesFromString(req.param('title'), function(err, imdbInfo){
-        res.json(imdbInfo);
-    });
-});
-
-
 /**
  * Hides Movie from View
  */
@@ -116,37 +101,17 @@ app.get('/movie/:id/hide', auth, function(req, res) {
 });
 
 
+/**
+ * fetch Movie Info (IMDB/Tomatoes, Poster)
+ * mainly for developping/testing
+ */
+app.get('/:title/info', auth, function(req, res) {
+    movie.getTomatoesFromString(req.param('title'), function(err, imdbInfo){
+        res.json(imdbInfo);
+    });
+});
 
 db.connect(function(){
     app.listen(app.get('port'));
 });
-
-var rssGet = function(type, callback) {
-    var Scrapper = require(__dirname + '/lib/scrapper.js');
-    var items = [];
-    var feedCount = config.feeds[type].feeds.length;
-    var feedcounter = 0;
-    var processItems = function(err, rss) {
-        if (err === null) {
-            var i, title, regex;
-            for (i in rss.items) {
-                for (title in config.feeds[type].queries) {
-                    regex = new RegExp(config.feeds[type].queries[title].title, 'g');
-                    if (regex.exec(rss.items[i].title)) {
-                        items.push(rss.items[i]);
-                    }
-                }
-            }
-        }
-        feedcounter++;
-        if (feedcounter === feedCount) {
-            callback(items);
-        }
-    };
-    for (var i = 0; i < feedCount; i++) {
-        Scrapper.scrap(config.feeds[type].feeds[i], function(err, rss) {
-            processItems(err, rss);
-        });
-    }
-};
 

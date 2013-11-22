@@ -25,21 +25,19 @@
          * 
          */
         var loadRssTV = function(type) {
-            var rss = [];
-            $.getJSON('/site/rss/' + type, function(json) {
-                var html = '';
+            var div, rssTV = document.getElementById('rss_TV');
+            $.getJSON('/tv', function(json) {
                 for (var i in json) {
-                    rss.push(json[i]);
-                    html += '<tr><td><a href="javascript:" id="rss_' + type 
-                    + '_items_' + i + '" class="rss_' + type + '_items">' 
-                    + json[i].title + '</a></td><td></td></tr>';
+                    div = document.createElement('div');
+                    div.className   = 'hyperlinkTv';
+                    div.textContent = json[i].title;
+                    div.onclick     = (function(link){
+                        return function(){
+                            parseData(link);
+                        };
+                    })(json[i].link);
+                    rssTV.appendChild(div);
                 }
-                $('#rss_' + type + ' tbody').html(html);
-                $('.rss_' + type + '_items').click(function() {
-                    var id = this.id;
-                    id = id.replace('rss_' + type + '_items_', '');
-                    parseData(rss[id].link);
-                });
             });
         };
 
@@ -49,8 +47,8 @@
          * Loads list of Movies as Thumbnails from db
          * 
          */
-        var loadRssMovies = function(type) {
-            $.getJSON('/site/rss/Movies', function(json) {
+        var loadRssMovies = function() {
+            $.getJSON('/movies', function(json) {
                 var div, i, poster;
                 json.sort(function(a, b) {
                     a = new Date(a.lastUpdate);
@@ -93,7 +91,7 @@
                             }
                         };
                     })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites);
-                    $('#rss_' + type).append(div);
+                    $('#rss_Movies').append(div);
                 }
             });
         };
@@ -102,12 +100,12 @@
 
 
         /**
-         * Loads the list of Downloaded files on the server
+         * Loads the list of Downloaded files that are on the server
          */
         var loadFiles = function() {
             $.getJSON('/file', function(files) {
-                var links = '';
                 $('#rss_files tbody').empty();
+                // Sort files by Filename
                 files.sort(function(a, b) {
                     a = a.filename.toLowerCase();
                     b = b.filename.toLowerCase();
@@ -122,45 +120,51 @@
         };
 
 
-        loadRssTV('TV');
-        loadRssMovies('Movies');
+        loadRssTV();
+        loadRssMovies();
         loadFiles();
 
 
+        /**
+         * Takes the input string and decides if
+         *    - String is URL but not uploaded-link > rip site
+         *    - String is ul.to Id > check ul-File
+         *    - String contains ul.to links
+         * 
+         * It then takes the Ids to the Id-Parser which checks the links
+         * 
+         * @param {string} data A string that contains URLs, an Id or plain text
+         */
         var parseData = function(data) {
-            var ids;
             status.set('start looking for links...');
-            $('#content').tabs({
-                active: 1
-            }); // Jump to tab 1 > links
-            if (validateURL(data)) {
-                if (isUploaded(data)) { // is uploaded.net Link
-                    ids = getLinksFromString(data);
-                }
-                else { // is link to page that may contain uploaded.net links > rip Site
-                    ripSite(data);
-                    return true;
-                }
+            $('#content').tabs({active: 1}); // Jump to tab 1 > links
+            
+            // is link to page that may contain uploaded.net links > rip Site
+            if (validateURL(data) && !isUploaded(data)) {
+                ripSite(data, function(ids){
+                    parseIDs(ids);
+                });
             }
-            else if (/^[a-zA-Z0-9-]{8}/i.test(data)) { // is ul.to ID
-                ids = {
-                    data: data.substr(0, 8)
-                };
+            else if (/^[a-zA-Z0-9-]{8}/i.test(data) && data !== 'uploaded') { // is ul.to ID
+                parseIDs({data: data.substr(0, 8)});
             }
             else { // is string that may contain ul.to links
-                ids = getLinksFromString(data);
+                parseIDs(getLinksFromString(data));
             }
-            parseIDs(ids);
         };
 
-        var ripSite = function(url) {
+
+        /**
+         * Rips all of the uploaded links from a URL
+         */
+        var ripSite = function(url, callback) {
             status.set('parsing site...');
-            $.getJSON('/site/links', {
-                url: url
-            }).done(function(ids) {
-                parseIDs(ids);
+            $.getJSON('/site/links', {url: url}).done(function(ids) {
+                callback(ids);
             });
         };
+        
+        
 
         /**
          * checks if url is uploaded.net link
@@ -211,9 +215,9 @@
 
 
         /**
-         * Table with ul.to links that have been checked
+         * Table with ul.to links that have been checked for availability
          * 
-         * @param {array} fileList an Array containing all ul.to links
+         * @param {array} fileList an Array containing all checked ul.to links
          */
         var makeTableChecked = function(fileList) {
             var extensions = ['mp4', 'mkv', 'avi', 'rar', ''];
@@ -288,12 +292,15 @@
             return input;
         };
 
+        /**
+         * Downlaods an ul-File to the server
+         * 
+         * @param {Number} id The ul.to/id
+         */
         var grabUl = function(id) {
-            status.set('downloading file...');
-            $.getJSON('ul/' + id + '/grab').done(function(data) {
-                var msg = '';
-                msg = data === true ? 'download complete!' : 'error when downloading!';
-                status.set(msg);
+            status.set('start downloading file to the server...');
+            $.getJSON('ul/' + id + '/grab').done(function(success) {
+                status.set(success === true ? 'download complete!' : 'error while downloading!');
             });
         };
 
@@ -322,6 +329,14 @@
             return Math.round((i === 0) ? (bytes / Math.pow(1024, i)) : (bytes / Math.pow(1024, i)).toFixed(1) * 10) / 10 + sizes[i];
         };
 
+        /**
+         * Creates a HTML Movie-Thumb from the Movie-Poster
+         * 
+         * @param {string} imageUrl The Url of the Movie-Poster-Image
+         * @param {string} title Title of the Movie as title-tag
+         * 
+         * @returns {Object} the DOM-Object of the div
+         */
         var thumbPoster = function(imageUrl, title) {
             var div = document.createElement('div');
             div.className = 'thumbPoster';
@@ -334,12 +349,18 @@
             return div;
         };
 
+        /**
+         * Adds info to the movie-Thumb
+         */
         var thumbPosterWithInfo = function(info) {
             var thumb = thumbPoster(info.imageUrl, info.title);
             var res = info.res;
 
         };
 
+        /**
+         * Creates the Movie-Info-Card
+         */
         var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis, actors) {
             var div = document.createElement('div');
             div.className = 'movieDigest';
