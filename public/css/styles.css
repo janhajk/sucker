@@ -214,7 +214,7 @@ td {
     font-size: 0.8em;
 }
 
-.hyperlinkTv {
+.hyperlinkParse {
     cursor: pointer;
     text-decoration: none;
     color: black;
@@ -224,7 +224,7 @@ td {
     margin-left: 2px;
 }
 
-.hyperlinkTv:hover {
+.hyperlinkParse:hover {
     text-decoration: underline;
     color: red;
 }

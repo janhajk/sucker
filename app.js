@@ -50,17 +50,35 @@ app.get('/movies', auth, function(req, res) {
 /**
  * rip a sites content and return all uploaded.net links
  */
-app.get('/site/links', auth, function(req, res){
-  var request = require('request');
-  request(req.query.url, function(error, response, body) {
-    res.json(ul.getLinksFromString(body));
-  });
+app.get('/site/links', auth, function(req, res) {
+    var request = require('request');
+    request(req.query.url, function(error, response, body) {
+        res.json(ul.getLinksFromString(body));
+    });
 });
+
+app.post('/site/links', auth, function(req, res) {
+    var request = require('request');
+    var content = [];
+    var fileCount = req.body.sites.length;
+    var curFile = 0;
+    for (var i = 0; i < fileCount; i++) {
+        request(req.body.sites[i].link, function(error, response, body) {
+            content.push(body);
+            console.log(body);
+            curFile++;
+            if (curFile++ === fileCount) {
+                res.json(ul.getLinksFromString(content.join(' ')));
+            }
+        });
+    }
+});
+
 
 /**
  * gets a List of all downloaded Files on server
  */
-app.get('/file', auth, function(req, res){
+app.get('/file', auth, function(req, res) {
     res.json(utils.getDownloadedFiles());
 });
 
