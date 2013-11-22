@@ -160,9 +160,9 @@
             // is link to page that may contain uploaded.net links > rip Site
             if (validateURL(data) && !isUploaded(data)) {
                 status.set('parsing site...');
-                $.getJSON('/site/links', {url: data}).done(function(ids){
+                $.post('/site/links', {sites: [data]}).done(function(ids){
                     parseIDs(ids);
-                });
+                }, 'json');
             }
             else if (/^[a-zA-Z0-9-]{8}/i.test(data) && data !== 'uploaded') { // is ul.to ID
                 parseIDs({data: data.substr(0, 8)});
@@ -280,7 +280,10 @@
                 $(t + ' tbody').append(tr);
                 links += 'http://ul.to/' + files[i].id + ' ';
             }
+            // Add links to textarea for exporting
             $('#paste').html(links);
+            
+            // update files per extension
             if (extensions.mp4 === 0) {
                 $('#rssLinks').tabs({active: 1});
             }
