@@ -160,7 +160,7 @@
             // is link to page that may contain uploaded.net links > rip Site
             if (validateURL(data) && !isUploaded(data)) {
                 status.set('parsing site...');
-                $.post('/site/links', {sites: [data]}).done(function(ids){
+                $.post('/site/links', {sites: [{links:[data]}]}).done(function(ids){
                     parseIDs(ids);
                 }, 'json');
             }
