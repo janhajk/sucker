@@ -75,7 +75,8 @@
                                 info.year,
                                 'imdb-Rating',
                                 info.synopsis === '' ? 'no synopsis' : info.synopsis,
-                                'actors'));
+                                'actors'
+                            ));
                             // Site-Links for ripping links
                             // Link to Rip all links at the same time
                             var divAll = document.createElement('div');
@@ -86,7 +87,7 @@
                                     status.set('parsing all sites...');
                                     $.post('/site/links', {sites: sites}, function(ids){
                                         parseIDs(ids);
-                                    }, 'json')
+                                    }, 'json');
                                 };
                             })(sites);
                             $('#linksDetails').append(divAll);
@@ -96,14 +97,14 @@
                                 divLink = document.createElement('div');
                                 divLink.className = 'hyperlinkParse';
                                 divLink.textContent = sites[key].title;
-                                divLink.onclick = (function(link) {
+                                divLink.onclick = (function(site){
                                     return function() {
                                         status.set('parsing site...');
-                                        $.getJSON('/site/links', {url: link}).done(function(ids){
+                                        $.post('/site/links', {sites: [site]}, function(ids){
                                             parseIDs(ids);
-                                        });
+                                        }, 'json');
                                     };
-                                })(sites[key].link);
+                                })(sites[key]);
                                 $('#linksDetails').append(divLink);
                             }
                         };
@@ -215,15 +216,15 @@
         /**
          * Table with ul.to links that have been checked for availability
          * 
-         * @param {array} fileList an Array containing all checked ul.to links
+         * @param {array} files an Array containing all checked ul.to links
          */
-        var makeTableChecked = function(fileList) {
-            var extensions = ['mp4', 'mkv', 'avi', 'rar', ''];
-            var rowcols = ['link', 'size', 'extension', 'jd', 'cloud'];
-            var target = '#tabs-links-';
-            var links = '';
+        var makeTableChecked = function(files) {
+            var extensions = {mp4:0, mkv:0, avi:0, rar:0, default:0};
+            var rowcols    = ['link', 'size', 'extension', 'jd', 'cloud'];
+            var target     = '#tabs-links-';
+            var links      = '';
             for (var i in extensions)
-            $(target + extensions[i] + ' tbody').empty();
+                $(target + i + ' tbody').empty();
 
             var cols = function() {
                 var tds = [];
@@ -231,35 +232,44 @@
                     tds.push(document.createElement('td'));
                 return tds;
             };
-            fileList.sort(function(a, b) {
+            files.sort(function(a, b) {
                 return a.extension < b.extension ? 1 : a.extension > b.extension ? -1 : 0;
             }); // sort files by extension
 
-            for (i in fileList) {
-                var t = $.inArray(fileList[i].extension, extensions) > -1 ? target + fileList[i].extension : target;
+            // Loop through all uploaded-files
+            for (i in files) {
+                var t = (extensions[files[i].extension] !== undefined) ? files[i].extension : 'default';
+                extensions[t]++;
+                var t = target + t;
                 var tr = document.createElement('tr');
                 var tds = new cols();
+                
+                // Link/Name Col
                 var link = document.createElement('a');
-                link.href = fileList[i].link;
-                link.textContent = fileList[i].filename;
+                link.href = files[i].link;
+                link.textContent = files[i].filename;
                 tds[0].appendChild(link);
+                
+                // Size Col
+                tds[1].textContent = bytesToSize(files[i].size);
 
-                tds[1].textContent = bytesToSize(fileList[i].size);
-
+                // Extension Col
                 var extension = document.createElement('div');
-                extension.className = 'icon icon' + fileList[i].extension;
-                extension.title = fileList[i].extension;
+                extension.className = 'icon icon' + files[i].extension;
+                extension.title = files[i].extension;
                 tds[2].appendChild(extension);
 
-                tds[3].appendChild(jDLink(fileList[i].id));
-
+                // J-Downloader Col
+                tds[3].appendChild(jDLink(files[i].id));
+                
+                // Download to Server Col
                 var cloud = document.createElement('div');
                 cloud.className = 'icon iconcloud';
-                cloud.id = fileList[i].id;
+                cloud.id = files[i].id;
                 cloud.title = 'download to server';
                 cloud.onclick = (function(i) {
                     return function() {
-                        grabUl(fileList[i].id);
+                        grabUl(files[i].id);
                     };
                 })(i);
                 tds[4].appendChild(cloud);
@@ -268,9 +278,16 @@
                 tr.appendChild(tds[key]);
 
                 $(t + ' tbody').append(tr);
-                links += 'http://ul.to/' + fileList[i].id + ' ';
+                links += 'http://ul.to/' + files[i].id + ' ';
             }
             $('#paste').html(links);
+            if (extensions.mp4 === 0) {
+                $('#rssLinks').tabs({active: 1});
+            }
+            else $('#rssLinks').tabs({active: 0});
+            for (var i in extensions) {
+                $('#rssLinks ul:first li:eq('+(Object.keys(extensions)).indexOf(i)+') a').text(i + '(' + extensions[i] + ')');
+            }
         };
 
 

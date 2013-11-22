@@ -48,29 +48,12 @@ app.get('/movies', auth, function(req, res) {
 });
 
 /**
- * rip a sites content and return all uploaded.net links
+ * rip content from all sites and return all uploaded.net links
  */
-app.get('/site/links', auth, function(req, res) {
-    var request = require('request');
-    request(req.query.url, function(error, response, body) {
-        res.json(ul.getLinksFromString(body));
-    });
-});
-
 app.post('/site/links', auth, function(req, res) {
-    var request = require('request');
-    var content = [];
-    var fileCount = req.body.sites.length;
-    var curFile = 0;
-    for (var i = 0; i < fileCount; i++) {
-        request(req.body.sites[i].link, function(error, response, body) {
-            content.push(body);
-            curFile++;
-            if (curFile++ === fileCount) {
-                res.json(ul.getLinksFromString(content.join(' ')));
-            }
-        });
-    }
+    utils.getContentFromMultipleUrls(req.body.sites, function(content){
+        res.json(content);
+    });
 });
 
 

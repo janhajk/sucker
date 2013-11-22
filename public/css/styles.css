@@ -228,3 +228,7 @@ td {
     text-decoration: underline;
     color: red;
 }
+
+#rssLinks {
+    font-size: 0.8em;
+}
