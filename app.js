@@ -103,7 +103,7 @@ app.get('/movie/:id/hide', auth, function(req, res) {
 
 /**
  * fetch Movie Info (IMDB/Tomatoes, Poster)
- * mainly for developping/testing
+ * for developping/testing
  */
 app.get('/:title/info', auth, function(req, res) {
     movie.getTomatoesFromString(req.param('title'), function(err, imdbInfo){
@@ -113,5 +113,6 @@ app.get('/:title/info', auth, function(req, res) {
 
 db.connect(function(){
     app.listen(app.get('port'));
+    db.movie.fixDb();
 });
 

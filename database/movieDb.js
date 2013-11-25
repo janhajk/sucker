@@ -40,7 +40,7 @@ var MovieSchema = mongoose.Schema({
         status: Number,
         lastChecked: Date
     }],
-    resolutions: [],
+    resolutions: {type: [String]},
     lastUpdate: {type: Date, index: true},
     dateAdded: Date,
     display: {type: Boolean, default:true, index: true}
@@ -132,4 +132,20 @@ exports.mergeMovies = mergeMovies;
 
 
 
+exports.fixDb = function(callback) {
+    var utils = require(__dirname + '/../lib/utils');
+    Movie.find(function(err, movies){
+        for (var key in movies) {
+            var res = [];
+            for (var i in movies[key].resolutions) {
+                if (typeof movies[key].resolutions[i] === 'string' && utils.isResolution(movies[key].resolutions[i])) {
+                    res.push(movies[key].resolutions[i]);
+                }
+            }
+            //console.log(res);
+            movies[key].resolutions = res;
+            movies[key].save();
+        }
+    });
+};
 

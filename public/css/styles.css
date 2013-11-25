@@ -53,7 +53,7 @@ td {
   overflow:hidden;
   position:relative;
   display:table;
-  max-width: 500px;
+  max-width: 520px;
   min-width: 300px;
 }
 
@@ -73,7 +73,7 @@ td {
 }
 
 #files {
-  max-width: 500px;
+  max-width: 520px;
   padding:0px;
   margin:0px;
 }
@@ -84,7 +84,7 @@ td {
   margin: 10px 10px 10px 0px;
   min-width: 300px;
   border: 1px black solid;
-  max-width: 500px;
+  max-width: 520px;
   padding: 0px;
   padding-bottom: 10px;
 }
@@ -178,6 +178,9 @@ td {
     padding: 5px;
     border: 1px solid black;
     text-align: center;
+    hyphens: auto;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 #linksDetails {
@@ -231,4 +234,15 @@ td {
 
 #rssLinks {
     font-size: 0.8em;
+}
+
+.resolutionBar {
+    position: relative;
+    font-size: 5pt;
+    color: black;
+    background-color: white;
+    background-color: rgba(255,255,255,0.8);
+    padding-left: 3px;
+    top: 75px;
+    text-align: left;
 }
