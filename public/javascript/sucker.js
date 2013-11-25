@@ -61,11 +61,9 @@
                     div = thumbPoster(poster, json[i].title);
                     div.style.float = 'left';
                     div.style.cursor = 'pointer';
-                    div.onclick = (function(_id, title, info, image, sites) {
+                    div.onclick = (function(_id, title, info, image, sites, div) {
                         return function() {
-                            $('#content').tabs({
-                                active: 1
-                            }); // Jump to tab 1 > links; tabs start with 0 = first tab
+                            $('#content').tabs({active: 1}); // Jump to tab 1 > links; tabs start with 0 = first tab
                             $('#linksDetails').empty();
                             $('#linksDetails').append(divMovieInfo(
                                 _id,
@@ -75,7 +73,8 @@
                                 info.year,
                                 'imdb-Rating',
                                 info.synopsis === '' ? 'no synopsis' : info.synopsis,
-                                'actors'
+                                'actors',
+                                div
                             ));
                             // Site-Links for ripping links
                             // Link to Rip all links at the same time
@@ -108,7 +107,7 @@
                                 $('#linksDetails').append(divLink);
                             }
                         };
-                    })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites);
+                    })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites, div);
                     $('#rss_Movies').append(div);
                 }
             });
@@ -368,7 +367,7 @@
         /**
          * Creates the Movie-Info-Card
          */
-        var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis, actors) {
+        var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis, actors, thumbDiv) {
             var div = document.createElement('div');
             div.className = 'movieDigest';
             var divOuter = document.createElement('div');
@@ -386,7 +385,11 @@
             spanRemove.title = 'don\'t display this movie anymore.';
             spanRemove.className = 'hyperlink';
             spanRemove.onclick = function() {
-                $.getJSON('/movie/' + _id + '/hide', function(data){Status.set('Movie will not be shown anymore!')});
+                $.getJSON('/movie/' + _id + '/hide', function(data){
+                    status.set('Movie will not be shown anymore!');
+                    $('#content').tabs({active: 0}); // Jump to tab 1 > links
+                    thumbDiv.parentNode.removeChild(thumbDiv);
+                });
             };
             divDetails.appendChild(spanRemove);
 
