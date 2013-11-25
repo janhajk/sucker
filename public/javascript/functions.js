@@ -60,6 +60,22 @@ var jDLink = function(id) {
 };
 
 
+
+/**
+ * Downlaods an ul-File to the server
+ * 
+ * @param {Number} id The ul.to/id
+ */
+var grabUl = function(id) {
+    msg.set('start downloading file to the server...');
+    $.getJSON('ul/' + id + '/grab').done(function(success) {
+        msg.set(success === true ? 'download complete!' : 'error while downloading!', 'fadeout');
+    });
+};
+
+
+
+
 /**
  * Gets all ul.to/uploaded.net links from a string
  * 

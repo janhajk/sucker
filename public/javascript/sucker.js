@@ -196,20 +196,6 @@
 
 
 
-        /**
-         * Downlaods an ul-File to the server
-         * 
-         * @param {Number} id The ul.to/id
-         */
-        var grabUl = function(id) {
-            msg.set('start downloading file to the server...');
-            $.getJSON('ul/' + id + '/grab').done(function(success) {
-                msg.set(success === true ? 'download complete!' : 'error while downloading!');
-            });
-        };
-
-
-
         $('#go').click(function() {
             parseData($('#data').val());
         });
