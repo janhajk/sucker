@@ -50,18 +50,11 @@ var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis
     var divDetails = document.createElement('div');
     divDetails.className = 'movieInfoLine';
     divDetails.textContent = 'Length: ' + runtime + 'min, Year: ' + year + ', ';
-    var spanRemove = document.createElement('span');
-    spanRemove.textContent = 'remove';
-    spanRemove.title = 'don\'t display this movie anymore.';
-    spanRemove.className = 'hyperlink';
-    spanRemove.onclick = function() {
-        $.getJSON('/movie/' + _id + '/hide', function(data){
-            msg.set('Movie will not be shown anymore!', 'fadeout');
-            $('#content').tabs({active: 0}); // Jump to tab 1 > links
-            thumbDiv.parentNode.removeChild(thumbDiv);
-        });
-    };
+    var spanRemove = createElementSpanRemove(_id, thumbDiv);
     divDetails.appendChild(spanRemove);
+    divDetails.appendChild(createElementSpanSpace());
+    var spanUpdate = createElementSpanUpdate(_id);
+    divDetails.appendChild(spanUpdate);
 
     var divSynopsis = document.createElement('div');
     divSynopsis.className = 'movieInfoLine';
@@ -80,6 +73,69 @@ var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis
     return div;
 };
 
+
+/**
+ * Creates a link which removes a movie from future display
+ */
+var createElementSpanSpace = function(len) {
+    if (len === undefined) len = 1;
+    var span         = document.createElement('span');
+    var space = '';
+    for (var i=0; i < len; i++) {
+        space += ' ';
+    }
+    span.textContent = space;
+    return span;
+};
+
+
+/**
+ * Creates a link which removes a movie from future display
+ */
+var createElementSpanRemove = function(id, thumbDiv) {
+    var span         = document.createElement('span');
+    span.textContent = 'remove';
+    span.title       = 'don\'t display this movie anymore.';
+    span.className   = 'hyperlink';
+    span.onclick = function() {
+        $.getJSON('/movie/' + id + '/hide', function(data){
+            msg.set('Movie will not be shown anymore!', 'fadeout');
+            $('#content').tabs({active: 0}); // Jump to tab 1 > links
+            thumbDiv.parentNode.removeChild(thumbDiv);
+        });
+    }
+    return span;
+};
+
+/**
+ * Creates a link which updates a movie-info
+ */
+var createElementSpanUpdate = function(id) {
+    var span         = document.createElement('span');
+    span.textContent = 'update';
+    span.title       = 'update info to this movie';
+    span.className   = 'hyperlink';
+    span.onclick = function() {
+        $.getJSON('/movie/' + id + '/update', function(data){
+            msg.set('Movie-Info Updated', 'fadeout');
+        });
+    }
+    return span;
+};
+
+
+/**
+ * Create a Link that can be parsed (for one or multiple Links)
+ */
+var parseLink = function(text, sites, clickEvent){
+    var div         = document.createElement('div');
+    div.className   = 'hyperlinkParse';
+    div.textContent = text;
+    div.click       = function(){
+        clickEvent(sites);
+    };
+    return div;
+};
 
 
 /**

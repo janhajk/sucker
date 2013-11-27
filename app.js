@@ -100,13 +100,23 @@ app.get('/movie/:id/hide', auth, function(req, res) {
     });
 });
 
+/**
+ * Updates Movie-Info for Movie by mongo-Id
+ */
+app.get('/movie/:id/update', auth, function(req, res) {
+    movie.updateInfoById(req.param('id'), function(success){
+        res.json(success);
+    });
+});
+
+
 
 /**
  * fetch Movie Info (IMDB/Tomatoes, Poster)
  * for developping/testing
  */
 app.get('/:title/info', auth, function(req, res) {
-    movie.getTomatoesFromString(req.param('title'), function(err, imdbInfo){
+    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(err, imdbInfo){
         res.json(imdbInfo);
     });
 });

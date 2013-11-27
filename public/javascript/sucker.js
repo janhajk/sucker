@@ -42,7 +42,7 @@
                 for (i = 0; i < json.length; i++) {
                     poster = json[i].info.posters !== undefined ? json[i].info.posters.thumbnail : '';
                     div = thumbPosterWithInfo(poster, json[i].title, json[i].info.year, json[i].resolutions);
-                    div.style.float = 'left';
+                    div.style.float  = 'left';
                     div.style.cursor = 'pointer';
                     div.onclick = (function(_id, title, info, image, sites, div) {
                         return function() {
@@ -61,33 +61,20 @@
                             ));
                             // Site-Links for ripping links
                             // Link to Rip all links at the same time
-                            var divAll = document.createElement('div');
-                            divAll.className = 'hyperlinkParse';
-                            divAll.textContent = '>- rip All Sites -<';
-                            divAll.onclick = (function(sites){
-                                return function() {
+                            $('#linksDetails').append(parseLink('>- rip All Sites -<', sites, function(sites){
+                                $.post('/site/links', {sites: sites}, function(ids){
                                     msg.set('parsing all sites...');
-                                    $.post('/site/links', {sites: sites}, function(ids){
+                                    parseIDs(ids);
+                                }, 'json');
+                            }));
+                            // Single Links that can be parsed
+                            for (var key in sites) {
+                                $('#linksDetails').append(parseLink(sites[key].title, sites[key], function(site){
+                                    $.post('/site/links', {sites: [site]}, function(ids){
+                                        msg.set('parsing site...');
                                         parseIDs(ids);
                                     }, 'json');
-                                };
-                            })(sites);
-                            $('#linksDetails').append(divAll);
-                            // Single Links
-                            var divLink;
-                            for (var key in sites) {
-                                divLink = document.createElement('div');
-                                divLink.className = 'hyperlinkParse';
-                                divLink.textContent = sites[key].title;
-                                divLink.onclick = (function(site){
-                                    return function() {
-                                        msg.set('parsing site...');
-                                        $.post('/site/links', {sites: [site]}, function(ids){
-                                            parseIDs(ids);
-                                        }, 'json');
-                                    };
-                                })(sites[key]);
-                                $('#linksDetails').append(divLink);
+                                }));
                             }
                         };
                     })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites, div);
