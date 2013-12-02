@@ -131,7 +131,7 @@ var parseLink = function(text, sites, clickEvent){
     var div         = document.createElement('div');
     div.className   = 'hyperlinkParse';
     div.textContent = text;
-    div.click       = function(){
+    div.onclick     = function(){
         clickEvent(sites);
     };
     return div;
