@@ -11,9 +11,12 @@ var thumbPoster = function(imageUrl, title, year) {
     div.className = 'thumbPoster';
     div.title = title + ' (' + year + ')';
     div.style.backgroundImage = 'url(' + imageUrl + ')';
+    div.textContent = title;
     if (imageUrl === '' || (/poster_default/).test(imageUrl)) {
         div.style.backgroundImage = '';
-        div.textContent = title;
+    }
+    else {
+        div.style.fontSize = "1px"; // For searching purposes
     }
     return div;
 };

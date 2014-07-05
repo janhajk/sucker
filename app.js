@@ -116,7 +116,7 @@ app.get('/movie/:id/update', auth, function(req, res) {
  * for developping/testing
  */
 app.get('/:title/info', auth, function(req, res) {
-    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(err, imdbInfo){
+    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(imdbInfo){
         res.json(imdbInfo);
     });
 });

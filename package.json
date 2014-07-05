@@ -12,6 +12,5 @@
     "request": "*",
     "imdb-api": "*",
     "google": "*",
-    "tomatoes": "*"
   }
 }
