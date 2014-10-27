@@ -13,11 +13,12 @@ var MovieSchema = mongoose.Schema({
         ids: {
             imdb: Number,
             tomatoes: Number,
-            tmdb: Number
+            tmdb: Number,
         },
         ratings: {
             imdb: Number,
-            tomatoes: Number
+            tomatoes: Number,
+            tmdb: Number,
         },
         posters: {
             thumbnail: String,
