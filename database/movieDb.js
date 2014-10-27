@@ -12,7 +12,8 @@ var MovieSchema = mongoose.Schema({
         synopsis: {type: String, default: ''},
         ids: {
             imdb: Number,
-            tomatoes: Number 
+            tomatoes: Number,
+            tmdb: Numer
         },
         ratings: {
             imdb: Number,
