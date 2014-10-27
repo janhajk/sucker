@@ -13,7 +13,7 @@ var MovieSchema = mongoose.Schema({
         ids: {
             imdb: Number,
             tomatoes: Number,
-            tmdb: Numer
+            tmdb: Number
         },
         ratings: {
             imdb: Number,
