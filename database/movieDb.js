@@ -82,7 +82,7 @@ exports.get = function(callback) {
 
 exports.findNew = function(callback) {
     Movie.findOne({'info.lastUpdated': undefined}, function (err, movie){
-        console.log(movie);
+        console.log('Movie to udpate: ' + movie);
         callback(err, movie);
     });
 };
@@ -101,7 +101,7 @@ exports.exists = function(movieInput, callback) {
 
 exports.hide = function(movieId, callback) {
     Movie.findByIdAndUpdate(movieId, { $set: { display: false }}, function(){
-        callback(true);   
+        callback(true);
     });
 };
 

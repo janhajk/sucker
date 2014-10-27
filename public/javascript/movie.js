@@ -273,6 +273,7 @@
         var div = document.createElement('div');
         div.title = this.info.title + ' (' + this.info.info.year + ')';
         div.style.backgroundImage = 'url(' + this.info.posters + ')';
+        div.style.backgroundSize = '52px 81px';
         div.textContent = this.info.title;
         div.style.margin = "5px";
         div.style.fontSize = "10px";
