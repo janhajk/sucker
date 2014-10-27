@@ -12,6 +12,8 @@ exports.ulPwd    = 'anKkFssc7ACA';
 exports.rottenTomatoesApiKey = '1234';
 exports.tomatoesMaxQueriesPerSecond = 8;
 
+exports.theMovieDbApiKey = '';
+exports.tmdbMaxQueriesPerSecond = 8;
 
 exports.feeds    = {
   TV     : {feeds: [
