@@ -11,7 +11,7 @@ var MovieSchema = mongoose.Schema({
         year: { type: Number, index: true },
         synopsis: {type: String, default: ''},
         ids: {
-            imdb: Number,
+            imdb: String,
             tomatoes: Number,
             tmdb: Number,
         },
@@ -82,6 +82,7 @@ exports.get = function(callback) {
 
 exports.findNew = function(callback) {
     Movie.findOne({'info.lastUpdated': undefined}, function (err, movie){
+        console.log(movie);
         callback(err, movie);
     });
 };
