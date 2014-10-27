@@ -9,8 +9,10 @@
 var thumbPoster = function(imageUrl, title, year) {
     var div = document.createElement('div');
     div.className = 'thumbPoster';
+    div.style.backgroundSize = '52px 81px';
     div.title = title + ' (' + year + ')';
     div.style.backgroundImage = 'url(' + imageUrl + ')';
+    
     div.textContent = title;
     if (imageUrl === '' || (/poster_default/).test(imageUrl)) {
         div.style.backgroundImage = '';
