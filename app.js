@@ -6,6 +6,7 @@ var fs       = require('fs');
 var ul       = require(__dirname + '/lib/uploaded.js');
 var utils    = require(__dirname + '/lib/utils.js');
 var movie    = require(__dirname + '/lib/movies.js');
+var plowshare= require(__dirname + '/lib/plowshare.js');
 
 var db       = require(__dirname + '/database/database.js');
 

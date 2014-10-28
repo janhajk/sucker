@@ -8,6 +8,10 @@ exports.cookieSecret = "1234";
 exports.fPath    = '/mnt/notpersistent/downloads';
 
 exports.login    = {};      // don't change
+
+
+// Add new hoster with 
+// exports.login[hoster.id]
 exports.login.ul = ['username', 'password'];
 
 
