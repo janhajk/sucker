@@ -6,8 +6,10 @@ exports.port         = 27017;
 exports.cookieSecret = "1234";
 
 exports.fPath    = '/mnt/notpersistent/downloads';
-exports.ulUser   = 'user1';
-exports.ulPwd    = 'anKkFssc7ACA';
+
+exports.login    = {};      // don't change
+exports.login.ul = ['username', 'password'];
+
 
 exports.rottenTomatoesApiKey = '1234';
 exports.tomatoesMaxQueriesPerSecond = 8;
