@@ -77,7 +77,7 @@ app.get('/file/:filename/download', auth, function(req, res){
  * Checks if a File still exists on File-Hoster and returns info about file
  */
 app.get('/ul/:id/check', auth, function(req, res){
-    ul.fileExists(req.param('id'), function(info){
+    ul.fileInfo(req.param('id'), function(info){
         res.json(info);
     });
 });
