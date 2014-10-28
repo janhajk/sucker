@@ -37,7 +37,6 @@ app.get('/', auth, function(req, res) {
 
 app.get('/tv', auth, function(req, res) {
     utils.rssGet('TV', function(items) {
-        console.log(items);
         items.sort(function(a,b){a=a.title.toLowerCase();b=b.title.toLowerCase();return a>b?1:a<b?-1:0;});
         res.json(items);
     });
