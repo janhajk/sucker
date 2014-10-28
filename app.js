@@ -37,6 +37,7 @@ app.get('/', auth, function(req, res) {
 
 app.get('/tv', auth, function(req, res) {
     utils.rssGet('TV', function(items) {
+        console.log(items);
         res.json(items);
     });
 });
