@@ -76,7 +76,7 @@ var loadFiles = function() {
         });
         for(var i in files) {
             console.log(files);
-            $('#rss_files tbody').append('<tr><td><a href="' + files[i].link + '">' + files[i].filename + '</a></td>' + '<td>' + bytesToSize(files[i].size) + '</td>' + '<td><div class="icon icon' + files[i].extension + '" title="' + files[i].extension + '"></div></a></td><td><a href="file/'+files[i].filename+'/delete">delete</a></td></tr>');
+            $('#rss_files tbody').append('<tr><td><a href="' + files[i].link + '">' + files[i].filename + '</a></td>' + '<td>' + bytesToSize(files[i].size) + '</td>' + '<td><div class="icon icon' + files[i].extension + '" title="' + files[i].extension + '"></div></a></td><td><a href="file/'+files[i].filename+'.'+files[i].extension+'/delete">delete</a></td></tr>');
         }
     });
 };
