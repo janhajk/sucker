@@ -68,7 +68,7 @@ var jDLink = function(link) {
  */
 var plowdown = function(link) {
     msg.set('start downloading file to the server...');
-    $.post('plowdown', link, function(success) {
+    $.post('plowdown', {link: link}, function(success) {
         msg.set(success == true ? 'download complete!' : 'error while downloading!', 'fadeout');
         loadFiles(); // reload files-table to show newly downloaded file
     }, 'json');
