@@ -88,6 +88,7 @@ app.get('/plowprobe/:links', auth, function(req, res){
  * Downloads a file to the server
  */
 app.post('/plowdown', auth, function(req, res){
+    console.log(req.body);
     plowshare.plowdown(req.body.link, function(success){
         res.json(success);
     });
