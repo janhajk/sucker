@@ -1,6 +1,6 @@
 var config = require(__dirname + '/../config.js');
 var mongoose = require('mongoose');
-var utils    = require(__dirname + '../lib/utils.js');
+var utils    = require(__dirname + '/../lib/utils.js');
 
 
 exports.connect = function(callback) {
