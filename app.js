@@ -7,6 +7,7 @@ var hoster   = require(__dirname + '/lib/hoster.js');
 var utils    = require(__dirname + '/lib/utils.js');
 var movie    = require(__dirname + '/lib/movies.js');
 var plowshare= require(__dirname + '/lib/plowshare.js');
+var engine   = require(__dirname + '/lib/engine.js');
 
 var db       = require(__dirname + '/database/database.js');
 
@@ -53,7 +54,6 @@ app.get('/movies', auth, function(req, res) {
  * rip content from [sites] and return all premium links
  */
 app.post('/site/links', auth, function(req, res) {
-    var engine = require(__dirname + '/lib/engine.js');
     engine.linkEngine(req.body.sites, function(content){
         res.json(content);
     });
