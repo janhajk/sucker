@@ -70,9 +70,9 @@
                             // Single Links that can be parsed
                             for (var key in sites) {
                                 $('#linksDetails').append(parseLink(sites[key].title, sites[key], function(site){
-                                    $.post('/site/links', {sites: [site]}, function(ids){
+                                    $.post('/site/links', {sites: [site]}, function(links){
                                         msg.set('parsing site...');
-                                        parseIDs(ids);
+                                        listLinks(links);
                                     }, 'json');
                                 }));
                             }
@@ -142,6 +142,9 @@
         };
 
 
+        var listLinks = function(links) {
+            makeTableChecked(links);
+        };
 
         /**
          * 

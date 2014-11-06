@@ -43,7 +43,7 @@ var isUploaded = function(url) {
  * This link opens a Downloadable Link in jDownloader
  * 
  */
-var jDLink = function(id) {
+var jDLink = function(link) {
     var input = document.createElement('div');
     input.className = 'icon iconjd';
     input.onclick = function() {
@@ -51,7 +51,7 @@ var jDLink = function(id) {
             type: 'POST',
             url: 'http://127.0.0.1:9666/flash/add',
             data: {
-                urls: 'http://ul.to/' + id
+                urls: link
             }
         });
         input.title = 'open in jDownloader';
@@ -66,12 +66,12 @@ var jDLink = function(id) {
  * 
  * @param {Number} id The ul.to/id
  */
-var grabUl = function(id) {
+var plowdown = function(link) {
     msg.set('start downloading file to the server...');
-    $.getJSON('ul/' + id + '/grab').done(function(success) {
-        msg.set(success === true ? 'download complete!' : 'error while downloading!', 'fadeout');
+    $.post('plowdown', link, function(success) {
+        msg.set(success == true ? 'download complete!' : 'error while downloading!', 'fadeout');
         loadFiles(); // reload files-table to show newly downloaded file
-    });
+    }, 'json');
 };
 
 

@@ -201,16 +201,15 @@ var makeTableChecked = function(files) {
         tds[2].appendChild(extension);
 
         // J-Downloader Col
-        tds[3].appendChild(jDLink(files[i].id));
+        tds[3].appendChild(jDLink(files[i].link));
         
         // Download to Server Col
         var cloud = document.createElement('div');
         cloud.className = 'icon iconcloud';
-        cloud.id = files[i].id;
         cloud.title = 'download to server';
         cloud.onclick = (function(i) {
             return function() {
-                grabUl(files[i].id);
+                plowdown(files[i].link);
             };
         })(i);
         tds[4].appendChild(cloud);
