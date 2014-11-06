@@ -209,6 +209,7 @@ var makeTableChecked = function(files) {
         cloud.title = 'download to server';
         cloud.onclick = (function(i) {
             return function() {
+                console.log(files[i].link);
                 plowdown(files[i].link);
             };
         })(i);
