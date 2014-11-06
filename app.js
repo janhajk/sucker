@@ -3,7 +3,7 @@ var express  = require('express');
 var path     = require('path');
 var fs       = require('fs');
 
-var ul       = require(__dirname + '/lib/uploaded.js');
+var hoster   = require(__dirname + '/lib/hoster.js');
 var utils    = require(__dirname + '/lib/utils.js');
 var movie    = require(__dirname + '/lib/movies.js');
 var plowshare= require(__dirname + '/lib/plowshare.js');
