@@ -53,7 +53,8 @@ app.get('/movies', auth, function(req, res) {
  * rip content from [sites] and return all premium links
  */
 app.post('/site/links', auth, function(req, res) {
-    utils.getContentFromMultipleUrls(req.body.sites, function(content){
+    var engine = require(__dirname + '/lib/engine.js');
+    engine.linkEngine(req.body.sites, function(content){
         res.json(content);
     });
 });
@@ -77,8 +78,8 @@ app.get('/file/:filename/download', auth, function(req, res){
 /**
  * Checks if a File still exists on File-Hoster and returns info about file
  */
-app.get('/plowprobe/:link', auth, function(req, res){
-    plowshare.plowprobe(req.param('link'), function(info){
+app.get('/plowprobe/:links', auth, function(req, res){
+    plowshare.plowprobe(req.param('links'), function(info){
         res.json(info);
     });
 });
