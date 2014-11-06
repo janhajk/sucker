@@ -75,6 +75,18 @@ app.get('/file/:filename/download', auth, function(req, res){
   res.download(file);
 });
 
+
+/**
+ * Delete file
+ */
+app.get('/file/:filename/delete', auth, function(req, res) {
+    var file = path.join(config.fPath, req.param('filename'));
+    fs.unlink(file, function(err) {
+        res.json(err);
+        console.log('Deleted file: ' + file);
+    });
+});
+
 /**
  * Checks if a File still exists on File-Hoster and returns info about file
  */
