@@ -61,6 +61,29 @@ var jDLink = function(link) {
 
 
 
+
+/*
+ * Loads the list of Downloaded files that are on the server
+ */
+var loadFiles = function() {
+    $.getJSON('/file', function(files) {
+        $('#rss_files tbody').empty();
+        // Sort files by Filename
+        files.sort(function(a, b) {
+            a = a.filename.toLowerCase();
+            b = b.filename.toLowerCase();
+            return a > b ? 1 : a < b ? -1 : 0;
+        });
+        for(var i in files) {
+            $('#rss_files tbody').append('<tr><td><a href="' + files[i].link + '">' + files[i].filename + '</a></td>' + '<td>' + bytesToSize(files[i].size) + '</td>' + '<td><div class="icon icon' + files[i].extension + '" title="' + files[i].extension + '"></div></a></td>');
+        }
+    });
+};
+
+
+
+
+
 /**
  * Downlaods an ul-File to the server
  * 
