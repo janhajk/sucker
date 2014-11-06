@@ -51,3 +51,5 @@ exports.urlRegex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|ww
 exports.emailRegex = new RegExp("^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$");
 
 exports.cacheTime = 60 * 60 * 1000; // 1 hour in milliseconds
+
+exports.dev = false;
