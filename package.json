@@ -12,6 +12,7 @@
     "request": "*",
     "imdb-api": "*",
     "google": "*",
-    "moviedb": "*"
+    "moviedb": "*",
+      "async": "*"
   }
 }

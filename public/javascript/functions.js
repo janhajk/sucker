@@ -70,6 +70,7 @@ var grabUl = function(id) {
     msg.set('start downloading file to the server...');
     $.getJSON('ul/' + id + '/grab').done(function(success) {
         msg.set(success === true ? 'download complete!' : 'error while downloading!', 'fadeout');
+        loadFiles(); // reload files-table to show newly downloaded file
     });
 };
 

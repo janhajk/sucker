@@ -10,9 +10,9 @@ exports.fPath    = '/mnt/notpersistent/downloads';
 exports.login    = {};      // don't change
 
 
-// Add new hoster with 
+// Add new hoster with
 // exports.login[hoster.id]
-exports.login.ul = ['username', 'password'];
+exports.login['ul'] = {username: 'username', password: 'password'};
 
 
 exports.rottenTomatoesApiKey = '1234';

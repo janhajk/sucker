@@ -50,7 +50,7 @@ app.get('/movies', auth, function(req, res) {
 });
 
 /**
- * rip content from all sites and return all uploaded.net links
+ * rip content from [sites] and return all premium links
  */
 app.post('/site/links', auth, function(req, res) {
     utils.getContentFromMultipleUrls(req.body.sites, function(content){
@@ -77,8 +77,8 @@ app.get('/file/:filename/download', auth, function(req, res){
 /**
  * Checks if a File still exists on File-Hoster and returns info about file
  */
-app.get('/ul/:id/check', auth, function(req, res){
-    ul.fileInfo(req.param('id'), function(info){
+app.get('/plowprobe/:link', auth, function(req, res){
+    plowshare.plowprobe(req.param('link'), function(info){
         res.json(info);
     });
 });
@@ -86,8 +86,8 @@ app.get('/ul/:id/check', auth, function(req, res){
 /**
  * Downloads a file to the server
  */
-app.get('/ul/:id/grab', auth, function(req, res){
-    ul.download(req.param('id'), function(success){
+app.get('/plowdown/:link', auth, function(req, res){
+    ul.download(req.param('link'), function(success){
         res.json(success);
     });
 });
@@ -125,6 +125,6 @@ app.get('/:title/info', auth, function(req, res) {
 
 db.connect(function(){
     app.listen(app.get('port'));
-    db.movie.fixDb();
+    db.movie.fixDb();   // Until this bug gets fixed...
 });
 
