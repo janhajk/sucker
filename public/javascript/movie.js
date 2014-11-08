@@ -8,8 +8,8 @@
      * 
      */
     var App = function() {
-        this.engine = new Engine();
-        this.movies = new Movies();
+        this.engine = null;
+        this.movies = null;
 
     };
     
