@@ -10,16 +10,16 @@
     var App = function() {
         this.engine = new Engine();
         this.movies = new Movies();
-        
+
     };
     
-    var App.prototype.loadMovies = function() {
+    App.prototype.loadMovies = function() {
         this.movies.load(0, function(){
 
         });        
     };
     
-    var App.prototype.loadTv = function(){
+    App.prototype.loadTv = function(){
         
         
     };

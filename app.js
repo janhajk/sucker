@@ -6,8 +6,6 @@ var fs       = require('fs');
 var hoster   = require(__dirname + '/lib/hoster.js');
 var utils    = require(__dirname + '/lib/utils.js');
 var movie    = require(__dirname + '/lib/movies.js');
-var plowshare= require(__dirname + '/lib/plowshare.js');
-var engine   = require(__dirname + '/lib/engine.js');
 
 var db       = require(__dirname + '/database/database.js');
 
@@ -54,6 +52,7 @@ app.get('/movies', auth, function(req, res) {
  * rip content from [sites] and return all premium links
  */
 app.post('/site/links', auth, function(req, res) {
+    var engine   = require(__dirname + '/lib/engine.js');
     engine.linkEngine(req.body.sites, function(content){
         res.json(content);
     });
@@ -91,7 +90,8 @@ app.get('/file/:filename/delete', auth, function(req, res) {
  * Checks if a File still exists on File-Hoster and returns info about file
  */
 app.get('/plowprobe/:links', auth, function(req, res){
-    plowshare.plowprobe(req.param('links'), function(info){
+    var plowprobe = require(__dirname + '/lib/plowshare.js').plowprobe;
+    plowprobe(req.param('links'), function(info){
         res.json(info);
     });
 });
@@ -100,7 +100,8 @@ app.get('/plowprobe/:links', auth, function(req, res){
  * Downloads a file to the server
  */
 app.post('/plowdown', auth, function(req, res){
-    plowshare.plowdown(req.body.link, function(success){
+    var plowdown = require(__dirname + '/lib/plowshare.js').plowdown;
+    plowdown(req.body.link, function(success){
         res.json(success);
     });
 });
@@ -127,7 +128,7 @@ app.get('/movie/:id/update', auth, function(req, res) {
 
 
 /**
- * fetch Movie Info (IMDB/Tomatoes, Poster)
+ * fetch Movie Info
  * for developping/testing
  */
 app.get('/:title/info', auth, function(req, res) {
@@ -136,6 +137,8 @@ app.get('/:title/info', auth, function(req, res) {
     });
 });
 
+
+// Connects app to mongo database
 db.connect(function(){
     app.listen(app.get('port'));
     db.movie.fixDb();   // Until this bug gets fixed...
