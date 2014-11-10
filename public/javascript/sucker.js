@@ -17,7 +17,7 @@
                     div.onclick = (function(site) {
                         return function() {
                             $.post('/site/links', {
-                                sites: [site]
+                                sites: [{link:site}]
                             }, function(links) {
                                 msg.set('parsing site...');
                                 listLinks(links);
