@@ -5,18 +5,23 @@
 
         /**
          * Loads List of TV-Shows from RSS
-         * 
+         *
          */
         var loadRssTV = function(type) {
             var div, rssTV = document.getElementById('rss_TV');
             $.getJSON('/tv', function(json) {
-                for (var i in json) {
+                for(var i in json) {
                     div = document.createElement('div');
-                    div.className   = 'hyperlinkParse';
+                    div.className = 'hyperlinkParse';
                     div.textContent = json[i].title;
-                    div.onclick     = (function(link){
-                        return function(){
-                            parseData(link);
+                    div.onclick = (function(site) {
+                        return function() {
+                            $.post('/site/links', {
+                                sites: [site]
+                            }, function(links) {
+                                msg.set('parsing site...');
+                                listLinks(links);
+                            }, 'json');
                         };
                     })(json[i].link);
                     rssTV.appendChild(div);
