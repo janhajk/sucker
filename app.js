@@ -53,6 +53,7 @@ app.get('/movies', auth, function(req, res) {
  */
 app.post('/site/links', auth, function(req, res) {
     var engine   = require(__dirname + '/lib/engine.js');
+    utils.log(req.body.sites);
     engine.linkEngine(req.body.sites, function(content){
         res.json(content);
     });
