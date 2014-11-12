@@ -92,7 +92,7 @@ var loadFiles = function() {
             td[1].innerHTML = bytesToSize(files[i].size);
 
             icon = document.createElement('div');
-            icon.class = 'icon icon' + files[i].extension;
+            icon.className = 'icon icon' + files[i].extension;
             icon.title = files[i].extension;
             td[2].appendChild(icon);
 
