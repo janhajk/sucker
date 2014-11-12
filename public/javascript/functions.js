@@ -102,7 +102,7 @@ var loadFiles = function() {
             td[3].appendChild(del);
 
             for(s = 0; s < 4; s++) {
-                tr.appenChild(td[s]);
+                tr.appendChild(td[s]);
             }
             $('#rss_files tbody').append(tr);
         }
