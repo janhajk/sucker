@@ -17,6 +17,9 @@ var tvLine = function(site) {
             }, function(links) {
                 msg.set('found ' + links.length + ' links.')
                 makeTableChecked(links);
+                $('#content').tabs({
+                    active: 1
+                }); // Jump to tab 1 > links; tabs start with 0 = first tab
             }, 'json');
         };
     })(site);
