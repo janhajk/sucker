@@ -13,7 +13,7 @@ var tvLine = function(site) {
         return function() {
             msg.set('parsing site...');
             $.post('/site/links', {
-                sites: [site.link]
+                sites: [site]
             }, function(links) {
                 msg.set('found ' + links.length + ' links.')
                 makeTableChecked(links);
