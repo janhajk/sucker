@@ -10,21 +10,7 @@
             var div, rssTV = document.getElementById('rss_TV');
             $.getJSON('/tv', function(json) {
                 for(var i in json) {
-                    div = document.createElement('div');
-                    div.className = 'hyperlinkParse';
-                    div.textContent = json[i].title;
-                    div.onclick = (function(site) {
-                        return function() {
-                            msg.set('parsing site...');
-                            $.post('/site/links', {
-                                sites: [link]
-                            }, function(links) {
-                                msg.set('found ' + links.length + ' links.')
-                                makeTableChecked(links);
-                            }, 'json');
-                        };
-                    })(json[i]);
-                    rssTV.appendChild(div);
+                    rssTV.appendChild(tvLine(json[i]));
                 }
             });
         };
