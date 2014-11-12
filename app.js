@@ -69,7 +69,7 @@ app.get('/file', auth, function(req, res) {
 /**
  * Send single file to client for downloading
  */
-app.get('/file/:filename/download', auth, function(req, res){
+app.get('/file/:filename', auth, function(req, res){
   var file = path.join(config.fPath, req.param('filename'));
   res.download(file);
 });
@@ -101,6 +101,7 @@ app.get('/plowprobe/:links', auth, function(req, res){
  */
 app.post('/plowdown', auth, function(req, res){
     var plowdown = require(__dirname + '/lib/plowshare.js').plowdown;
+    utils.log('Start downloading: ' + req.body.link);
     plowdown(req.body.link, function(success){
         res.json(success);
     });

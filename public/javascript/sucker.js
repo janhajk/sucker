@@ -16,14 +16,15 @@
                     div.textContent = json[i].title;
                     div.onclick = (function(site) {
                         return function() {
+                            msg.set('parsing site...');
                             $.post('/site/links', {
-                                sites: [{link:site}]
+                                sites: [link]
                             }, function(links) {
-                                msg.set('parsing site...');
+                                msg.set('found ' + links.length + ' links.')
                                 listLinks(links);
                             }, 'json');
                         };
-                    })(json[i].link);
+                    })(json[i]);
                     rssTV.appendChild(div);
                 }
             });
