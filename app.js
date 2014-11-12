@@ -62,14 +62,14 @@ app.post('/site/links', auth, function(req, res) {
 /**
  * gets a List of all downloaded Files on server
  */
-app.get('/file', auth, function(req, res) {
+app.get('/files', auth, function(req, res) {
     res.json(utils.getDownloadedFiles());
 });
 
 /**
  * Send single file to client for downloading
  */
-app.get('/file/:filename', auth, function(req, res){
+app.get('/files/:filename', auth, function(req, res){
   var file = path.join(config.fPath, req.param('filename'));
   res.download(file);
 });
@@ -78,7 +78,7 @@ app.get('/file/:filename', auth, function(req, res){
 /**
  * Delete file
  */
-app.get('/file/:filename/delete', auth, function(req, res) {
+app.get('/files/:filename/delete', auth, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     fs.unlink(file, function(err) {
         res.json(err);

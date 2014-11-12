@@ -69,7 +69,7 @@ var jDLink = function(link) {
  * Loads the list of Downloaded files that are on the server
  */
 var loadFiles = function() {
-    $.getJSON('/file', function(files) {
+    $.getJSON('/files', function(files) {
         $('#rss_files tbody').empty();
         // Sort files by Filename
         files.sort(function(a, b) {
@@ -97,7 +97,7 @@ var loadFiles = function() {
             td[2].appendChild(icon);
 
             del = document.createElement('a');
-            del.href = 'file/' + files[i].link + '/delete';
+            del.href = 'files/' + files[i].link + '/delete';
             del.innerHTML = 'delete';
             td[3].appendChild(del);
 
