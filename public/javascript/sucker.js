@@ -3,14 +3,15 @@
 
 
         /**
-         * Loads List of TV-Shows from RSS
+         * Loads List of TV-Shows direct from monitored RSS
          *
          */
         var loadRssTV = function(type) {
             var div, rssTV = document.getElementById('rss_TV');
             $.getJSON('/tv', function(json) {
                 for(var i in json) {
-                    rssTV.appendChild(tvLine(json[i]));
+                    div = tvLine(json[i]);
+                    rssTV.appendChild(div);
                 }
             });
         };
