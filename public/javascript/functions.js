@@ -77,10 +77,10 @@ var loadFiles = function() {
             b = b.filename.toLowerCase();
             return a > b ? 1 : a < b ? -1 : 0;
         });
-        var tr, td = [],
-            a, icon, del, s;
-        for(var i in files) {
+        var tr, td = [], a, icon, del, s, i;
+        for(i in files) {
             tr = document.createElement('tr');
+            td = [];
             for(s = 0; s < 4; s++) {
                 td.push(document.createElement('td'));
             }
