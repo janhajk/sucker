@@ -1,3 +1,30 @@
+/*
+ * Creates a tv-link which can be parsed
+ *
+ * @param site  {object} {title, pubdate, link, description}
+ *     
+ *
+ */
+var tvLine = function(site) {
+    var div = document.createElement('div');
+    div.className = 'hyperlinkParse';
+    div.textContent = site.title;
+    div.onclick = (function(site) {
+        return function() {
+            msg.set('parsing site...');
+            $.post('/site/links', {
+                sites: [site.link]
+            }, function(links) {
+                msg.set('found ' + links.length + ' links.')
+                makeTableChecked(links);
+            }, 'json');
+        };
+    })(site);
+};
+
+
+
+
 /**
  * Creates a HTML Movie-Thumb from the Movie-Poster
  * 
