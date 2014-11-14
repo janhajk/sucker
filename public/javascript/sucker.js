@@ -10,8 +10,7 @@
             var div, rssTV = document.getElementById('rss_TV');
             $.getJSON('/tv', function(json) {
                 for(var i in json) {
-                    div = tvLine(json[i]);
-                    rssTV.appendChild(div);
+                    rssTV.appendChild(siteRow(json[i]));
                 }
             });
         };
@@ -54,15 +53,9 @@
                                 }, 'json');
                             }));
                             // Single Links that can be parsed
+                            var linkList = document.getElementById('linksDetails');
                             for(var key in sites) {
-                                $('#linksDetails').append(parseLink(sites[key].title, sites[key], function(site) {
-                                    $.post('/site/links', {
-                                        sites: [site]
-                                    }, function(links) {
-                                        msg.set('parsing site...');
-                                        makeTableChecked(links);
-                                    }, 'json');
-                                }));
+                                linkList.appendChild(siteRow(sites[key]));
                             }
                         };
                     })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites, div);

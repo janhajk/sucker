@@ -1,11 +1,11 @@
 /*
- * Creates a tv-link which can be parsed
+ * Creates a siteRow which can be parsed
  *
  * @param site  {object} {title, pubdate, link, description}
  *     
  *
  */
-var tvLine = function(site) {
+var siteRow = function(site) {
     var div = document.createElement('div');
     div.className = 'hyperlinkParse';
     var domain = site.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
@@ -155,7 +155,7 @@ var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis
 
 
 /**
- * Creates a link which removes a movie from future display
+ * creates a space-span of len white spaces
  */
 var createElementSpanSpace = function(len) {
     if (len === undefined) len = 1;
