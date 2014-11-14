@@ -79,32 +79,7 @@ var loadFiles = function() {
         });
         var tr, td = [], a, icon, del, s, i;
         for(i in files) {
-            tr = document.createElement('tr');
-            td = [];
-            for(s = 0; s < 4; s++) {
-                td.push(document.createElement('td'));
-            }
-            a = document.createElement('a');
-            a.href = '/files/' + files[i].link;
-            a.innerHTML = files[i].filename;
-            td[0].appendChild(a);
-
-            td[1].innerHTML = bytesToSize(files[i].size);
-
-            icon = document.createElement('div');
-            icon.className = 'icon icon' + files[i].extension;
-            icon.title = files[i].extension;
-            td[2].appendChild(icon);
-
-            del = document.createElement('a');
-            del.href = 'files/' + files[i].link + '/delete';
-            del.innerHTML = 'delete';
-            td[3].appendChild(del);
-
-            for(s = 0; s < 4; s++) {
-                tr.appendChild(td[s]);
-            }
-            $('#rss_files tbody').append(tr);
+            $('#rss_files tbody').append(fileRow(files[i]));
         }
     });
 };
