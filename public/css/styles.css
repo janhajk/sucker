@@ -81,10 +81,10 @@ td {
   width:100%;
 }
 
-#a {
+.a {
     text-decoration: underline;
     cursor: pointer;
-};
+}
 
 .box {
   margin: 10px 10px 10px 0px;
