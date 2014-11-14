@@ -9,7 +9,7 @@ var tvLine = function(site) {
     var div = document.createElement('div');
     div.className = 'hyperlinkParse';
     var domain = site.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-    div.textContent = site.title + '(' + domain[1] + ')';
+    div.innerHTML = site.title + ' (<a href="' + site.link + '">' + domain[1] + '</a>)';
     div.onclick = (function(site) {
         return function() {
             msg.set('parsing site...');
