@@ -51,9 +51,9 @@ var fileRow = function(file) {
     td[2].appendChild(icon);
 
     del = document.createElement('a');
-    del.href = 'javascript:';
+    del.href = file.link;
     del.onclick = function(){
-        $.getJSON('files/' + file.link + '/delete', function(data){
+        $.get('files/' + file.link + '/delete', function(data){
             msg.set('File Deleted', 'fadeout');
             loadFiles(); // reload files-table
         });

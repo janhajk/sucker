@@ -81,8 +81,8 @@ app.get('/files/:filename', auth, function(req, res){
 app.get('/files/:filename/delete', auth, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     fs.unlink(file, function(err) {
-        res.json(err);
         utils.log('Deleted file: ' + file);
+        res.json(err);
     });
 });
 
