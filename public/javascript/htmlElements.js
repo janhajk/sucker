@@ -28,6 +28,47 @@ var tvLine = function(site) {
 
 
 
+/*
+ * One Row of FileExplorer
+ */
+var fileRow = function(file) {
+    var tr = document.createElement('tr');
+    var td = [];
+    for(s = 0; s < 4; s++) {
+        td.push(document.createElement('td'));
+    }
+    var a = null, icon = null, del = null, s = 0, i = 0;
+
+    a = document.createElement('a');
+    a.href = '/files/' + file.link;
+    a.textContent = file.filename;
+    td[0].appendChild(a);
+    td[1].textContent = bytesToSize(file.size);
+
+    icon = document.createElement('div');
+    icon.className = 'icon icon' + file.extension;
+    icon.title = file.extension;
+    td[2].appendChild(icon);
+
+    del = document.createElement('a');
+    del.href = 'javascript:';
+    del.onclick = function(){
+        $.getJSON('files/' + file.link + '/delete', function(data){
+            msg.set('File Deleted', 'fadeout');
+            loadFiles(); // reload files-table
+        });
+    };
+    del.textContent = 'delete';
+    td[3].appendChild(del);
+
+    for(s = 0; s < 4; s++) {
+        tr.appendChild(td[s]);
+    }
+    return tr;
+};
+
+
+
 
 /**
  * Creates a HTML Movie-Thumb from the Movie-Poster
