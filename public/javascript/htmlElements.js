@@ -51,6 +51,7 @@ var fileRow = function(file) {
     td[2].appendChild(icon);
 
     del = document.createElement('div');
+    del.className = 'a';
     del.onclick = function() {
         $.get('files/' + file.link + '/delete', function(err) {
             if(err === null) {

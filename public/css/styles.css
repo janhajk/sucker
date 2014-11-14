@@ -80,6 +80,12 @@ td {
 #files table {
   width:100%;
 }
+
+#a {
+    text-decoration: underline;
+    cursor: pointer;
+};
+
 .box {
   margin: 10px 10px 10px 0px;
   min-width: 300px;
