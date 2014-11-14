@@ -40,7 +40,7 @@ var fileRow = function(file) {
     var a = null, icon = null, del = null, s = 0, i = 0;
 
     a = document.createElement('a');
-    a.href = '/files/' + file.link;
+    a.href = 'javascript:';
     a.textContent = file.filename;
     td[0].appendChild(a);
     td[1].textContent = bytesToSize(file.size);
@@ -50,11 +50,12 @@ var fileRow = function(file) {
     icon.title = file.extension;
     td[2].appendChild(icon);
 
-    del = document.createElement('a');
-    del.href = file.link;
-    del.onclick = function(){
-        $.get('files/' + file.link + '/delete', function(data){
-            msg.set('File Deleted', 'fadeout');
+    del = document.createElement('div');
+    del.onclick = function() {
+        $.get('files/' + file.link + '/delete', function(err) {
+            if(err === null) {
+                msg.set('File Deleted', 'fadeout');
+            }
             loadFiles(); // reload files-table
         });
     };
