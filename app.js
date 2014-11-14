@@ -66,13 +66,26 @@ app.get('/files', auth, function(req, res) {
     res.json(utils.getDownloadedFiles());
 });
 
+
+
 /**
  * Send single file to client for downloading
  */
-app.get('/files/:filename', auth, function(req, res){
-  var file = path.join(config.fPath, req.param('filename'));
-  res.download(file);
+app.get('/files/:filename', auth, function(req, res) {
+    var file = path.join(config.fPath, req.param('filename'));
+    utils.log('-');
+    utils.log('sending file \'' + file + '\' to client...');
+    res.download(file, function(err) {
+        if(err) {
+            utils.log('error when sending file to client:');
+            utils.log(err);
+        } else {
+            utils.log('file successfully sent to client!');
+        }
+    });
 });
+
+
 
 
 /**
@@ -81,7 +94,7 @@ app.get('/files/:filename', auth, function(req, res){
 app.get('/files/:filename/delete', auth, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     fs.unlink(file, function(err) {
-        utils.log('Deleted file: ' + file);
+        utils.lg('-'); utils.log('Deleted file: ' + file);
         res.json(err);
     });
 });
