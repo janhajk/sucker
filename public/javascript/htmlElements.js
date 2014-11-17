@@ -13,7 +13,7 @@ var siteRow = function(sites) {
         div.innerHTML = sites.title + ' (<a href="' + sites.link + '">' + domain[1] + '</a>)';
         sites = [sites];
     } else {
-        div.textContext = '>- rip All Sites -<';
+        div.textContent = '>- rip All Sites -<';
     }
     div.onclick = (function(sites) {
         return function() {
