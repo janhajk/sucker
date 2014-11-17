@@ -5,16 +5,21 @@
  *     
  *
  */
-var siteRow = function(site) {
+var siteRow = function(sites) {
     var div = document.createElement('div');
     div.className = 'hyperlinkParse';
-    var domain = site.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-    div.innerHTML = site.title + ' (<a href="' + site.link + '">' + domain[1] + '</a>)';
-    div.onclick = (function(site) {
+    if(typeof sites === 'string') {
+        var domain = sites.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+        div.innerHTML = sites.title + ' (<a href="' + sites.link + '">' + domain[1] + '</a>)';
+        sites = [sites];
+    } else {
+        div.textContext = '>- rip All Sites -<';
+    }
+    div.onclick = (function(sites) {
         return function() {
             msg.set('parsing site...');
             $.post('/site/links', {
-                sites: [site]
+                sites: sites
             }, function(links) {
                 msg.set('found ' + links.length + ' links.')
                 makeTableChecked(links);
@@ -23,7 +28,7 @@ var siteRow = function(site) {
                 }); // Jump to tab 1 > links; tabs start with 0 = first tab
             }, 'json');
         };
-    })(site);
+    })(sites);
     return div;
 };
 

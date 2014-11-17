@@ -43,17 +43,12 @@
                             $('#linksDetails').empty();
                             $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
                             // Site-Links for ripping links
-                            // Link to Rip all links at the same time
-                            $('#linksDetails').append(parseLink('>- rip All Sites -<', sites, function(sites) {
-                                $.post('/site/links', {
-                                    sites: sites
-                                }, function(ids) {
-                                    msg.set('parsing all sites...');
-                                    parseIDs(ids);
-                                }, 'json');
-                            }));
-                            // Single Links that can be parsed
+
                             var linkList = document.getElementById('linksDetails');
+                            // Link to Rip all links at the same time
+                            linkList.appendChild(siteRow(sites));
+
+                            // Single Links that can be parsed
                             for(var key in sites) {
                                 linkList.appendChild(siteRow(sites[key]));
                             }
