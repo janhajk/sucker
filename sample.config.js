@@ -5,7 +5,7 @@ exports.database     = "mongodb://localhost/sucker";
 exports.port         = 27017;
 exports.cookieSecret = "1234";
 
-exports.fPath    = '/mnt/notpersistent/downloads';
+exports.fPath    = '/mnt/notpersistent/downloads';    // no trailing slash
 
 exports.login    = {};      // don't change
 
