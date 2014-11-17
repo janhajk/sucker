@@ -8,7 +8,7 @@
 var siteRow = function(sites) {
     var div = document.createElement('div');
     div.className = 'hyperlinkParse';
-    if(sites.title !== udnefined) {
+    if(sites.title !== undefined) {
         var domain = sites.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
         div.innerHTML = sites.title + ' (<a href="' + sites.link + '">' + domain[1] + '</a>)';
         sites = [sites];
