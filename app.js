@@ -146,15 +146,32 @@ app.get('/movie/:id/update', auth, function(req, res) {
  * for developping/testing
  */
 app.get('/:title/info', auth, function(req, res) {
-    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(imdbInfo){
+    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(imdbInfo) {
         res.json(imdbInfo);
     });
 });
 
 
+
 // Connects app to mongo database
-db.connect(function(){
+db.connect(function() {
     app.listen(app.get('port'), "0.0.0.0");
-    db.movie.fixDb();   // Until this bug gets fixed...
+    db.movie.fixDb(); // Until this bug gets fixed...
+    /*
+     * cronjobs
+     *
+     */
+    // Start first cronrun after 6 seconds
+    setTimeout((function() {
+        movie.updateFeeds(function(e) {
+            utils.log(e)
+        })
+    })(), 6000);
+    setInterval((function() {
+        movie.updateFeeds(function(e) {
+            utils.log(e)
+        })
+    })(), config.updateIntervalFeeds);
+    setInterval(movie.cronUpdateInfo, config.updateIntervalInfos);
 });
 
