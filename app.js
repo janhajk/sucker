@@ -154,7 +154,7 @@ app.get('/:title/info', auth, function(req, res) {
 
 // Connects app to mongo database
 db.connect(function(){
-    app.listen(app.get('port'));
+    app.listen(app.get('port'), "0.0.0.0");
     db.movie.fixDb();   // Until this bug gets fixed...
 });
 
