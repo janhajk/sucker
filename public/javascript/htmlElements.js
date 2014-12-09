@@ -46,7 +46,7 @@ var fileRow = function(file) {
     var a = null, icon = null, del = null, s = 0, i = 0;
 
     a = document.createElement('a');
-    a.href = 'javascript:';
+    a.href = 'files/' + file.link + '/delete';
     a.textContent = file.filename;
     td[0].appendChild(a);
     td[1].textContent = bytesToSize(file.size);
