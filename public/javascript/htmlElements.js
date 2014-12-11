@@ -19,7 +19,7 @@ var siteRow = function(sites) {
         return function() {
             msg.set('parsing site...');
             $.ajax({
-                url: '/sites/links',
+                url: '/site/links',
                 type: 'post',
                 data: {sites:sites},
                 cache: false,
