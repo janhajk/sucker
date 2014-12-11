@@ -74,7 +74,7 @@ var loadFiles = function() {
         type: 'get',
         cache: false,
         dataType: 'json'
-    })done.(function(data){
+    }).done(function(data){
         $('#rss_files tbody').empty();
         // Sort files by Filename
         data.sort(function(a, b) {
