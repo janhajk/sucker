@@ -18,15 +18,21 @@ var siteRow = function(sites) {
     div.onclick = (function(sites) {
         return function() {
             msg.set('parsing site...');
-            $.post('/site/links', {
-                sites: sites
-            }, function(links) {
-                msg.set('found ' + links.length + ' links.')
-                makeTableChecked(links);
+            $.ajax({
+                url: '/sites/links',
+                type: 'post',
+                data: {sites:sites},
+                cache: false,
+                dataType: 'json'
+            }).done(function(data){
+                msg.set('found ' + data.length + ' links.')
+                makeTableChecked(data);
                 $('#content').tabs({
                     active: 1
                 }); // Jump to tab 1 > links; tabs start with 0 = first tab
-            }, 'json');
+            }).fail(function(){
+                msg.set('Error when checking links!');
+            });
         };
     })(sites);
     return div;
