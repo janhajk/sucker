@@ -140,6 +140,7 @@ var thumbPosterWithInfoClickable = function(mData) {
             }
         };
     })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
+    return div;
 };
 
 
