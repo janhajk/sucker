@@ -80,10 +80,10 @@ var fileRow = function(file) {
 
 /**
  * Creates a HTML Movie-Thumb from the Movie-Poster
- * 
+ *
  * @param {string} imageUrl The Url of the Movie-Poster-Image
  * @param {string} title Title of the Movie as title-tag
- * 
+ *
  * @returns {Object} the DOM-Object of the div
  */
 var thumbPoster = function(imageUrl, title, year) {
@@ -92,7 +92,7 @@ var thumbPoster = function(imageUrl, title, year) {
     div.style.backgroundSize = '52px 81px';
     div.title = title + ' (' + year + ')';
     div.style.backgroundImage = 'url(' + imageUrl + ')';
-    
+
     div.textContent = title;
     if (imageUrl === '' || (/poster_default/).test(imageUrl)) {
         div.style.backgroundImage = '';
@@ -116,6 +116,30 @@ var thumbPosterWithInfo = function(imageUrl, title, year, resolutions) {
     divRes.textContent = res.join(', ');
     thumb.appendChild(divRes);
     return thumb;
+};
+
+var thumbPosterWithInfoClickable = function(mData) {
+    imgUrl = mData.info.posters !== undefined ? mData.info.posters.thumbnail : '';
+    var div = thumbPosterWithInfo(imgUrl, mData.title, mData.info.year, mData.resolutions);
+    div.style.cursor = 'pointer';
+    div.onclick = (function(_id, title, info, image, sites, div) {
+        return function() {
+            // Jump to tab 1 > links; tabs start with 0 = first tab
+            $('#content').tabs({
+                active: 1
+            });
+            $('#linksDetails').empty();
+            $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
+            // Site-Links for ripping links
+            var linkList = document.getElementById('linksDetails');
+            // Link to Rip all links at the same time
+            linkList.appendChild(siteRow(sites));
+            // Single Links that can be parsed
+            for(var key in sites) {
+                linkList.appendChild(siteRow(sites[key]));
+            }
+        };
+    })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
 };
 
 
@@ -163,10 +187,10 @@ var divMovieInfo = function(_id, title, posterUrl, runtime, year, imdb, synopsis
  * creates a space-span of len white spaces
  */
 var createElementSpanSpace = function(len) {
-    if (len === undefined) len = 1;
-    var span         = document.createElement('span');
+    if(len === undefined) len = 1;
+    var span = document.createElement('span');
     var space = '';
-    for (var i=0; i < len; i++) {
+    for(var i = 0; i < len; i++) {
         space += ' ';
     }
     span.textContent = space;

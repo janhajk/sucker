@@ -2,16 +2,24 @@
     $(document).ready(function() {
 
 
+
         /**
          * Loads List of TV-Shows direct from monitored RSS
          *
          */
         var loadRssTV = function(type) {
             var div, rssTV = document.getElementById('rss_TV');
-            $.getJSON('/tv', function(json) {
-                for(var i in json) {
-                    rssTV.appendChild(siteRow(json[i]));
+            $.ajax({
+                url: '/tv',
+                type: 'get',
+                dataType: 'json',
+                cache: false
+            }).done(function(data) {
+                for(var i in data) {
+                    rssTV.appendChild(siteRow(data[i]));
                 }
+            }).fail(function(data) {
+                msg.set('Error loading TV-Shows');
             });
         };
 
@@ -22,8 +30,13 @@
          *
          */
         var loadRssMovies = function() {
-            $.getJSON('/movies', function(json) {
-                var div, i, poster;
+            $.ajax({
+                url: '/movies',
+                type: 'get',
+                dataType: 'json',
+                cache: false,
+            }).done(function(json) {
+                var div, i;
                 json.sort(function(a, b) {
                     a = new Date(a.lastUpdate);
                     b = new Date(b.lastUpdate);
@@ -31,33 +44,15 @@
                 });
                 // Start creating Movie-Thumbs
                 for(i = 0; i < json.length; i++) {
-                    poster = json[i].info.posters !== undefined ? json[i].info.posters.thumbnail : '';
-                    div = thumbPosterWithInfo(poster, json[i].title, json[i].info.year, json[i].resolutions);
+                    div = thumbPosterWithInfoClickable(json[i]);
                     div.style.float = 'left';
-                    div.style.cursor = 'pointer';
-                    div.onclick = (function(_id, title, info, image, sites, div) {
-                        return function() {
-                            $('#content').tabs({
-                                active: 1
-                            }); // Jump to tab 1 > links; tabs start with 0 = first tab
-                            $('#linksDetails').empty();
-                            $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
-                            // Site-Links for ripping links
-
-                            var linkList = document.getElementById('linksDetails');
-                            // Link to Rip all links at the same time
-                            linkList.appendChild(siteRow(sites));
-
-                            // Single Links that can be parsed
-                            for(var key in sites) {
-                                linkList.appendChild(siteRow(sites[key]));
-                            }
-                        };
-                    })(json[i]._id, json[i].title, json[i].info, poster, json[i].sites, div);
                     $('#rss_Movies').append(div);
                 }
+            }).fail(function(data) {
+                msg.set('Error when loading movies');
             });
         };
+
 
 
 
