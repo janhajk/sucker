@@ -84,7 +84,7 @@ var loadFiles = function() {
         });
         var tr, td = [], a, icon, del, s, i;
         for(i in data) {
-            $('#rss_files tbody').append((data[i]));
+            $('#rss_files tbody').append(fileRow(data[i]));
         }
     }).fail(function(){
 
