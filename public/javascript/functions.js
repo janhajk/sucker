@@ -118,8 +118,7 @@ Date.prototype.easy = function() {
         return 'yesterday';
     }
     if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
-        diff = Math.floor((now.getTime() - this.getTime())/24/60/60/1000)
-        return  diff + ' day'+(diff>1?'s':'')+' ago';
+        return  Math.floor((now.getTime() - this.getTime())/24/60/60/1000) + ' days ago';
     }
     diff = Math.floor((today_start - this.getTime())/24/60/60/1000/7);
     return  diff + ' week'+(diff>1?'s':'')+' ago';
