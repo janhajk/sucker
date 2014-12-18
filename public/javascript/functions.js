@@ -105,3 +105,21 @@ var plowdown = function(link) {
         loadFiles(); // reload files-table to show newly downloaded file
     }, 'json');
 };
+
+
+Date.prototype.easy = function() {
+    var now = new Date();
+    var today_start = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)).getTime();
+    if (this.getTime()-today_start > 0) {
+        return 'today';
+    }
+    else if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
+        return 'yesterday';
+    }
+    else if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
+        return Math.floor((this.getTime() - today_start)/24/60/60/1000) + ' days ago';
+    }
+    else {}
+        return Math.floor((this.getTime() - today_start)/24/60/60/1000/7) + ' weeks ago';;
+    }
+};

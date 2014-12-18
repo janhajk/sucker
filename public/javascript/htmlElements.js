@@ -2,15 +2,16 @@
  * Creates a siteRow which can be parsed
  *
  * @param site  {object} {title, pubdate, link, description}
- *     
+ *
  *
  */
 var siteRow = function(sites) {
     var div = document.createElement('div');
+    var date = new date(sites.pubdate);
     div.className = 'hyperlinkParse';
     if(sites.title !== undefined) {
         var domain = sites.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-        div.innerHTML = sites.title + ' (<a href="' + sites.link + '">' + domain[1] + '</a>)';
+        div.innerHTML = sites.title + ' (' + date.easy() + ', <a href="' + sites.link + '">' + domain[1] + '</a>)';
         sites = [sites];
     } else {
         div.textContent = '>- rip All Sites -<';
