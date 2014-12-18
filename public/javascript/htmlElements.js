@@ -10,7 +10,7 @@ var siteRow = function(sites) {
     div.className = 'hyperlinkParse';
     if(sites.title !== undefined) {
         var domain = sites.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-        var date = new date(sites.pubdate);
+        var date = new Date(sites.pubdate);
         div.innerHTML = sites.title + ' (' + date.easy() + ', <a href="' + sites.link + '">' + domain[1] + '</a>)';
         sites = [sites];
     } else {
