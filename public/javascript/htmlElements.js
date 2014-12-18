@@ -11,7 +11,7 @@ var siteRow = function(sites) {
     if(sites.title !== undefined) {
         var domain = sites.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
         var date = new Date(sites.pubdate);
-        div.innerHTML = sites.title + ' (' + date.easy() + ', <a href="' + sites.link + '">' + domain[1] + '</a>)';
+        div.innerHTML = sites.title + ' (' + date.easy() + ' @<a href="' + sites.link + '">' + domain[1] + '</a>)';
         sites = [sites];
     } else {
         div.textContent = '>- rip All Sites -<';
