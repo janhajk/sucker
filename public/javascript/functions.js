@@ -113,7 +113,7 @@ Date.prototype.easy = function() {
     if (this.getTime()-today_start > 0) {
         return 'today';
     }
-    else if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
+    else if (this.getTime() - (today_start-24*60*60*1000) > 0) {
         return 'yesterday';
     }
     else if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
