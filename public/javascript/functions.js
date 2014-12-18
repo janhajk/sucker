@@ -119,7 +119,7 @@ Date.prototype.easy = function() {
     else if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
         return Math.floor((this.getTime() - today_start)/24/60/60/1000) + ' days ago';
     }
-    else {}
+    else
         return Math.floor((this.getTime() - today_start)/24/60/60/1000/7) + ' weeks ago';;
     }
 };
