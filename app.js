@@ -91,17 +91,10 @@ app.get('/files/:filename', auth, function(req, res) {
 /**
  * Delete file
  */
-app.get('/files/:filename/delete', auth, function(req, res) {
-    var file = path.join(config.fPath, req.param('filename'));
-    fs.unlink(file, function(err) {
-        utils.lg('-'); utils.log('Deleted file: ' + file);
-        res.json(err);
-    });
-});
 app.delete('/files/:filename/delete', auth, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     fs.unlink(file, function(err) {
-        utils.lg('-'); utils.log('Deleted file: ' + file);
+        utils.log('-'); utils.log('Deleted file: ' + file);
         res.json(err);
     });
 });

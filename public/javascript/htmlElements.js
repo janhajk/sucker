@@ -21,7 +21,7 @@ var siteRow = function(sites) {
             msg.set('parsing site...');
             $.ajax({
                 url: '/site/links',
-                type: 'post',
+                type: 'POST',
                 data: {sites:sites},
                 cache: false,
                 dataType: 'json'
@@ -63,12 +63,14 @@ var fileRow = function(file) {
     icon.title = file.extension;
     td[2].appendChild(icon);
 
+    // DELETE Link
     del = document.createElement('div');
     del.className = 'a';
     del.onclick = function() {
         $.ajax({
             url: 'files/' + file.link + '/delete',
-            type: 'delete'
+            type: 'DELETE',
+            dataType: 'json'
         }).done(function(err){
             err === null && msg.set('File Deleted', 'fadeout');
             loadFiles(); // reload files-table
