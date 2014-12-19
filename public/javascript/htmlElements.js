@@ -66,12 +66,21 @@ var fileRow = function(file) {
     del = document.createElement('div');
     del.className = 'a';
     del.onclick = function() {
-        $.get('files/' + file.link + '/delete', function(err) {
+        $.ajax({
+            url: 'files/' + file.link + '/delete',
+            type: 'delete'
+        }).done(function(err){
+            err === null && msg.set('File Deleted', 'fadeout');
+            loadFiles(); // reload files-table
+        }).fail(function(){
+            msg.set('Problem with connection; try again.', 'fadeout');
+        });
+        /*$.get('files/' + file.link + '/delete', function(err) {
             if(err === null) {
                 msg.set('File Deleted', 'fadeout');
             }
             loadFiles(); // reload files-table
-        });
+        });*/
     };
     del.textContent = 'delete';
     td[3].appendChild(del);
@@ -296,13 +305,13 @@ var makeTableChecked = function(files) {
         var t = target + t;
         var tr = document.createElement('tr');
         var tds = new cols();
-        
+
         // Link/Name Col
         var link = document.createElement('a');
         link.href = files[i].link;
         link.textContent = files[i].filename;
         tds[0].appendChild(link);
-        
+
         // Size Col
         tds[1].textContent = bytesToSize(files[i].size);
 
@@ -314,7 +323,7 @@ var makeTableChecked = function(files) {
 
         // J-Downloader Col
         tds[3].appendChild(jDLink(files[i].link));
-        
+
         // Download to Server Col
         var cloud = document.createElement('div');
         cloud.className = 'icon iconcloud';
@@ -332,10 +341,10 @@ var makeTableChecked = function(files) {
 
         $(t + ' tbody').append(tr);
     }
-    
+
     // Add links to textarea for exporting
     $('#paste').html(files.map(function(elem){return 'http://ul.to/' + elem.id + ' ';}).join());
-    
+
     // update files per extension
     if (extensions.mp4 === 0) {
         $('#rssLinks').tabs({active: 1});

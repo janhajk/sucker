@@ -111,15 +111,14 @@ Date.prototype.easy = function() {
     var now = new Date();
     var diff;
     var today_start = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)).getTime();
-    if (this.getTime()-today_start > 0) {
+    if(this.getTime() - today_start > 0) {
         return 'today';
-    }
-    else if (this.getTime() - (today_start-24*60*60*1000) > 0) {
+    } else if(this.getTime() - (today_start - 86400000) > 0) {
         return 'yesterday';
     }
-    if (this.getTime() - (today_start-7*24*60*60*1000) > 0) {
-        return  Math.floor((now.getTime() - this.getTime())/24/60/60/1000) + ' days ago';
+    if(this.getTime() - (today_start - 7 * 86400000) > 0) {
+        return Math.floor((now.getTime() - this.getTime()) / 86400000) + ' days ago';
     }
-    diff = Math.floor((today_start - this.getTime())/24/60/60/1000/7);
-    return  diff + ' week'+(diff>1?'s':'')+' ago';
+    diff = Math.floor((now.getTime() - this.getTime()) / 86400000 / 7);
+    return diff + ' week' + (diff > 1 ? 's' : '') + ' ago';
 };
