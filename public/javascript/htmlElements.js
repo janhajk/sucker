@@ -52,12 +52,14 @@ var fileRow = function(file) {
     }
     var a = null, icon = null, del = null, s = 0, i = 0;
 
+    // Filename Link
     a = document.createElement('a');
     a.href = 'files/' + file.link;
     a.textContent = file.filename;
     td[0].appendChild(a);
     td[1].textContent = bytesToSize(file.size);
 
+    // Filetype Icon
     icon = document.createElement('div');
     icon.className = 'icon icon' + file.extension;
     icon.title = file.extension;
@@ -77,12 +79,6 @@ var fileRow = function(file) {
         }).fail(function(){
             msg.set('Problem with connection; try again.', 'fadeout');
         });
-        /*$.get('files/' + file.link + '/delete', function(err) {
-            if(err === null) {
-                msg.set('File Deleted', 'fadeout');
-            }
-            loadFiles(); // reload files-table
-        });*/
     };
     del.textContent = 'delete';
     td[3].appendChild(del);
@@ -107,7 +103,7 @@ var fileRow = function(file) {
 var thumbPoster = function(imageUrl, title, year) {
     var div = document.createElement('div');
     div.className = 'thumbPoster';
-    div.style.backgroundSize = '52px 81px';
+    div.style.backgroundSize = '62px 91px';
     div.title = title + ' (' + year + ')';
     div.style.backgroundImage = 'url(' + imageUrl + ')';
 
@@ -124,7 +120,7 @@ var thumbPoster = function(imageUrl, title, year) {
 
 
 /**
- * Adds info to the movie-Thumb
+ * Adds info to the movie-Thumb (Resolution, etc.)
  */
 var thumbPosterWithInfo = function(imageUrl, title, year, resolutions) {
     var thumb = thumbPoster(imageUrl, title, year);
