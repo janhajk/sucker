@@ -21,7 +21,7 @@ var msg = new Msg();
  *
  */
 var bytesToSize = function(bytes) {
-    var sizes = ['Bytes', 'K', 'M', 'G', 'T'];
+    var sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB'];
     if (bytes === 0) return 'n/a';
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
     return Math.round((i === 0) ? (bytes / Math.pow(1024, i)) : (bytes / Math.pow(1024, i)).toFixed(1) * 10) / 10 + sizes[i];
