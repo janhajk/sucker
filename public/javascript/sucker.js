@@ -338,7 +338,7 @@
             files.sort(function(a, b) {
                 return a.extension < b.extension ? 1 : a.extension > b.extension ? -1 : 0;
             });
-            var makeRow = function(filename, link, extension, size) {
+            var makeRow = function(filename, href, extension, size) {
                 // create new DOM-table-row
                 var tr = document.createElement('tr');
                 // create cells
@@ -346,7 +346,7 @@
                 for(var i in rowcols) tds.push(document.createElement('td'));
                 // Link/Name Col
                 var link = document.createElement('a');
-                link.href = link;
+                link.href = href;
                 link.textContent = filename;
                 tds[0].appendChild(link);
                 // Size Col
