@@ -67,7 +67,6 @@
             } else {
                 div.textContent = '>- rip All Sites -<';
             }
-            // TODO: make this function freestanding
             div.onclick = (function(sites) {
                 return function() {
                     msg.set('parsing site...');
@@ -79,7 +78,7 @@
                         },
                         cache: false,
                         dataType: 'json'
-                    }).done(parse).fail(function() {
+                    }).done(function(onlineLinks){processLinks(onlineLinks)}).fail(function() {
                         msg.set('Error when checking links!');
                     });
                 };
@@ -87,9 +86,9 @@
             return div;
         };
         /*
-         * Parse link serverside and return online links
+         * Process returned online links
          */
-        var parse = function(data) {
+        var processLinks = function(data) {
             /* structure of data; example
                            [
                               {
