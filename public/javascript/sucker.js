@@ -67,6 +67,7 @@
             } else {
                 div.textContent = '>- rip All Sites -<';
             }
+            // TODO: make this function freestanding
             div.onclick = (function(sites) {
                 return function() {
                     msg.set('parsing site...');
@@ -78,8 +79,18 @@
                         },
                         cache: false,
                         dataType: 'json'
-                    }).done(function(data) {
-                        /* structure of data; example
+                    }).done(parse).fail(function() {
+                        msg.set('Error when checking links!');
+                    });
+                };
+            })(sites);
+            return div;
+        };
+        /*
+         * Parse link serverside and return online links
+         */
+        var parse = function(data) {
+            /* structure of data; example
                            [
                               {
                                 "status": "0",
@@ -90,21 +101,15 @@
                               }
                             ]
                         */
-                        msg.set('found ' + data.length + ' links.')
-                        makeTableChecked(data);
-                        // Add links to textarea for exporting
-                        $('#paste').html(data.map(function(elem) {
-                            return elem.link;
-                        }).join(' '));
-                        $('#content').tabs({
-                            active: 1
-                        }); // Jump to tab 1 > links; tabs start with 0 = first tab
-                    }).fail(function() {
-                        msg.set('Error when checking links!');
-                    });
-                };
-            })(sites);
-            return div;
+            msg.set('found ' + data.length + ' links.')
+            makeTableChecked(data);
+            // Add links to textarea for exporting
+            $('#paste').html(data.map(function(elem) {
+                return elem.link;
+            }).join(' '));
+            $('#content').tabs({
+                active: 1
+            }); // Jump to tab 1 > links; tabs start with 0 = first tab
         };
         /*
          * One Row of FileExplorer
