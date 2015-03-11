@@ -43,7 +43,7 @@
                     $('#rss_Movies').append(div);
                 }
             }).fail(function(data) {
-                msg.set('Error when loading movies');
+                msg.set('Error while loading movies');
             });
         };
         loadRssTV();
@@ -79,8 +79,23 @@
                         cache: false,
                         dataType: 'json'
                     }).done(function(data) {
+                        /* structure of data; example
+                           [
+                              {
+                                "status": "0",
+                                "filename": "Sm.2013.720p-iFT",
+                                "extension": "mkv",
+                                "size": "4920000000",
+                                "link": "http://ul.to/08otd5be"
+                              }
+                            ]
+                        */
                         msg.set('found ' + data.length + ' links.')
                         makeTableChecked(data);
+                        // Add links to textarea for exporting
+                        $('#paste').html(data.map(function(elem) {
+                            return elem.link;
+                        }).join());
                         $('#content').tabs({
                             active: 1
                         }); // Jump to tab 1 > links; tabs start with 0 = first tab
@@ -138,6 +153,8 @@
             }
             return tr;
         };
+
+
         /**
          * Creates a HTML Movie-Thumb from the Movie-Poster
          *
@@ -296,6 +313,7 @@
          * @param {array} files an Array containing all checked ul.to links
          */
         var makeTableChecked = function(files) {
+            // one tab for every extension; integer is filecount per extension
             var extensions = {
                 mp4: 0,
                 mkv: 0,
@@ -305,54 +323,58 @@
             };
             var rowcols = ['link', 'size', 'extension', 'jd', 'cloud'];
             var target = '#tabs-links-';
+            // empty all tabs
             for(var i in extensions) $(target + i + ' tbody').empty();
             var cols = function() {
                 var tds = [];
                 for(var i in rowcols) tds.push(document.createElement('td'));
                 return tds;
             };
+            // sort files by extension
             files.sort(function(a, b) {
                 return a.extension < b.extension ? 1 : a.extension > b.extension ? -1 : 0;
-            }); // sort files by extension
-            // Loop through all uploaded-files
-            for(i in files) {
-                var t = (extensions[files[i].extension] !== undefined) ? files[i].extension : 'default';
-                extensions[t]++;
-                var t = target + t;
+            });
+            var makeRow = function(filename, link, extension, size) {
+                // create new DOM-table-row
                 var tr = document.createElement('tr');
-                var tds = new cols();
+                // create cells
+                var tds = [];
+                for(var i in rowcols) tds.push(document.createElement('td'));
                 // Link/Name Col
                 var link = document.createElement('a');
-                link.href = files[i].link;
-                link.textContent = files[i].filename;
+                link.href = link;
+                link.textContent = filename;
                 tds[0].appendChild(link);
                 // Size Col
-                tds[1].textContent = bytesToSize(files[i].size);
+                tds[1].textContent = bytesToSize(size);
                 // Extension Col
                 var extension = document.createElement('div');
-                extension.className = 'icon icon' + files[i].extension;
-                extension.title = files[i].extension;
+                extension.className = 'icon icon' + extension;
+                extension.title = extension;
                 tds[2].appendChild(extension);
                 // J-Downloader Col
-                tds[3].appendChild(jDLink(files[i].link));
+                tds[3].appendChild(jDLink(link));
                 // Download to Server Col
                 var cloud = document.createElement('div');
                 cloud.className = 'icon iconcloud';
                 cloud.title = 'download to server';
-                cloud.onclick = (function(i) {
+                cloud.onclick = (function(link) {
                     return function() {
-                        console.log(files[i].link);
-                        plowdown(files[i].link);
+                        console.log(link);
+                        plowdown(link);
                     };
-                })(i);
+                })(link);
                 tds[4].appendChild(cloud);
                 for(var key in tds) tr.appendChild(tds[key]);
-                $(t + ' tbody').append(tr);
+                return tr;
+            };
+            // Loop through all files
+            for(i in files) {
+                var t = (extensions[files[i].extension] !== undefined) ? files[i].extension : 'default';
+                extensions[t]++;
+                var tr = makeRow(files[i].filename, files[i].link, files[i].extension, files[i].size);
+                $(target + t + ' tbody').append(tr);
             }
-            // Add links to textarea for exporting
-            $('#paste').html(files.map(function(elem) {
-                return 'http://ul.to/' + elem.id + ' ';
-            }).join());
             // update files per extension
             if(extensions.mp4 === 0) {
                 $('#rssLinks').tabs({
@@ -361,6 +383,7 @@
             } else $('#rssLinks').tabs({
                 active: 0
             });
+            // Update Tab-title counter
             for(var i in extensions) {
                 $('#rssLinks ul:first li:eq(' + (Object.keys(extensions)).indexOf(i) + ') a').text(i + '(' + extensions[i] + ')');
             }
