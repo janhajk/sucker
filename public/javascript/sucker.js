@@ -95,7 +95,7 @@
                         // Add links to textarea for exporting
                         $('#paste').html(data.map(function(elem) {
                             return elem.link;
-                        }).join());
+                        }).join(' '));
                         $('#content').tabs({
                             active: 1
                         }); // Jump to tab 1 > links; tabs start with 0 = first tab
