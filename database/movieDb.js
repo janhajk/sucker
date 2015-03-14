@@ -132,16 +132,6 @@ var mergeMovies = function(movie1, movie2) {
 exports.mergeMovies = mergeMovies;
 
 
-/*
- * Clean-up/remove old entries after n-days
- */
-exports.cleanUp = function(n, callback) {
-    var expire = new Date(new Date().setDate(new Date().getDate()-n)).toISOString() ;
-    Movie.remove({lastUpdate : {$lt : expire}});
-    callback();
-};
-
-
 exports.fixDb = function(callback) {
     var utils = require(__dirname + '/../lib/utils');
     Movie.find(function(err, movies){
