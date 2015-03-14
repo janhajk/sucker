@@ -167,7 +167,6 @@ db.connect(function() {
             utils.log(e)
         });
         movie.cleanUp(7, function(){
-            utils.log('cleandup database');
         });
     })(), 6000);
     setInterval((function() {
@@ -175,7 +174,6 @@ db.connect(function() {
             utils.log(e)
         });
         movie.cleanUp(7, function(){
-            utils.log('cleandup database');
         });
     })(), config.updateIntervalFeeds);
     setInterval(movie.cronUpdateInfo, config.updateIntervalInfos);
