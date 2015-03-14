@@ -179,7 +179,7 @@
             divTitle.className = 'thumbPosterTitle';
             //div.style.backgroundImage = 'url(' + imageUrl + ')';
             divTitle.textContent = title;
-            if(imageUrl === '' || (/poster_default/).test(imageUrl)) {
+            if(imageUrl === 'http://image.tmdb.org/t/p/w500null' || (/poster_default/).test(imageUrl)) {
                 div.width = '10vw';
                 div.height = div.offsetWidth * 1.3;
                 div.appendChild(divTitle);
