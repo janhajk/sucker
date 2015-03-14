@@ -165,12 +165,18 @@ db.connect(function() {
     setTimeout((function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
-        })
+        });
+        movie.cleanUp(15, function(){
+            utils.log('cleandup database');
+        });
     })(), 6000);
     setInterval((function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
-        })
+        });
+        movie.cleanUp(15, function(){
+            utils.log('cleandup database');
+        });
     })(), config.updateIntervalFeeds);
     setInterval(movie.cronUpdateInfo, config.updateIntervalInfos);
 });
