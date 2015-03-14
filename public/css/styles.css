@@ -174,7 +174,6 @@ td {
 
 .thumbPoster {
     margin: 5px;
-    font-size: 10px;
     border: 1px solid black;
     text-align: center;
     hyphens: auto;
@@ -186,6 +185,7 @@ td {
     width: 10vw;
 }
 .thumbPosterTitle {
+    font-size: 10px;
     width: 10vw;
     margin-top: -50px;
 }
