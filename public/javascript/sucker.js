@@ -172,18 +172,21 @@
             var img = document.createElement('img');
             img.src = imageUrl;
             img.className = 'thumbPosterImg';
+            var title = document.createElement('div');
             var div = document.createElement('div');
             div.className = 'thumbPoster';
-            //div.style.backgroundSize = '62px 91px';
-            div.title = title + ' (' + year + ')';
+            title.title = title + ' (' + year + ')';
+            title.className = 'thumbPosterTitle';
             //div.style.backgroundImage = 'url(' + imageUrl + ')';
-            div.textContent = title;
-            if(imageUrl === '' || (/poster_default/).test(imageUrl)) {
-                div.style.backgroundImage = '';
+            title.textContent = title;
+            if(imageUrl !== '' && !(/poster_default/).test(imageUrl)) {
+                div.appendChild(img);
             } else {
-                div.style.fontSize = "1px"; // Title very small searching purposes
+                title.style.fontSize = "1px"; // Title very small searching purposes
+                div.width = 10vw;
+                div.height = div.width * 1.3;
             }
-            div.appendChild(img);
+            div.appendChild(title);
             return div;
         };
         /**

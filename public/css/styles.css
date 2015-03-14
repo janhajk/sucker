@@ -186,6 +186,9 @@ td {
     width: 52px;
     width: 10vw;
 }
+.thumbPosterTitle {
+    width: 10vw;
+}
 
 #linksDetails {
     padding-bottom: 20px;
