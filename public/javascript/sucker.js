@@ -179,14 +179,13 @@
             divTitle.className = 'thumbPosterTitle';
             //div.style.backgroundImage = 'url(' + imageUrl + ')';
             divTitle.textContent = title;
-            if(imageUrl !== '' && !(/poster_default/).test(imageUrl)) {
-                div.appendChild(img);
-
-            } else {
+            if(imageUrl === '' || (/poster_default/).test(imageUrl)) {
                 div.width = '10vw';
-                div.height = div.width * 1.3;
+                div.height = div.offsetWidth * 1.3;
                 div.appendChild(divTitle);
 
+            } else {
+                div.appendChild(img);
             }
             return div;
         };
