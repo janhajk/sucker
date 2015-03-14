@@ -175,7 +175,6 @@ td {
 .thumbPoster {
     margin: 5px;
     font-size: 10px;
-    padding: 5px;
     border: 1px solid black;
     text-align: center;
     hyphens: auto;
@@ -188,6 +187,17 @@ td {
 }
 .thumbPosterTitle {
     width: 10vw;
+    margin-top -50px;
+}
+
+.resolutionBar {
+    position: relative;
+    font-size: 5pt;
+    color: black;
+    background-color: white;
+    background-color: rgba(255,255,255,0.8);
+    padding-left: 3px;
+    text-align: left;
 }
 
 #linksDetails {
@@ -241,15 +251,4 @@ td {
 
 #rssLinks {
     font-size: 0.8em;
-}
-
-.resolutionBar {
-    position: relative;
-    font-size: 5pt;
-    color: black;
-    background-color: white;
-    background-color: rgba(255,255,255,0.8);
-    padding-left: 3px;
-    top: 75px;
-    text-align: left;
 }

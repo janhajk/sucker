@@ -172,13 +172,13 @@
             var img = document.createElement('img');
             img.src = imageUrl;
             img.className = 'thumbPosterImg';
-            var title = document.createElement('div');
+            var divTitle = document.createElement('div');
             var div = document.createElement('div');
             div.className = 'thumbPoster';
-            title.title = title + ' (' + year + ')';
-            title.className = 'thumbPosterTitle';
+            divTitle.title = title + ' (' + year + ')';
+            divTitle.className = 'thumbPosterTitle';
             //div.style.backgroundImage = 'url(' + imageUrl + ')';
-            title.textContent = title;
+            divTitle.textContent = title;
             if(imageUrl !== '' && !(/poster_default/).test(imageUrl)) {
                 div.appendChild(img);
             } else {
@@ -186,7 +186,7 @@
                 div.width = '10vw';
                 div.height = div.width * 1.3;
             }
-            div.appendChild(title);
+            div.appendChild(divTitle);
             return div;
         };
         /**
