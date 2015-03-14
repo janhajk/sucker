@@ -166,7 +166,7 @@ db.connect(function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
         });
-        movie.cleanUp(15, function(){
+        movie.cleanUp(7, function(){
             utils.log('cleandup database');
         });
     })(), 6000);
@@ -174,7 +174,7 @@ db.connect(function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
         });
-        movie.cleanUp(15, function(){
+        movie.cleanUp(7, function(){
             utils.log('cleandup database');
         });
     })(), config.updateIntervalFeeds);
