@@ -90,16 +90,17 @@
          */
         var processLinks = function(data) {
             /* structure of data; example
-                           [
-                              {
-                                "status": "0",
-                                "filename": "Sm.2013.720p-iFT",
-                                "extension": "mkv",
-                                "size": "4920000000",
-                                "link": "http://ul.to/08otd5be"
-                              }
-                            ]
-                        */
+                [
+                  {
+                    "status": "0",
+                    "filename": "Sm.2013.720p-iFT",
+                    "extension": "mkv",
+                    "size": "4920000000",
+                    "link": "http://ul.to/08otd5be"
+                  }
+                  { etc. }
+                ]
+            */
             msg.set('found ' + data.length + ' links.')
             makeTableChecked(data);
             // Add links to textarea for exporting
@@ -168,17 +169,21 @@
          * @returns {Object} the DOM-Object of the div
          */
         var thumbPoster = function(imageUrl, title, year) {
+            var img = document.createElement('img');
+            img.src = imageUrl;
+            img.className = 'thumbPosterImg';
             var div = document.createElement('div');
             div.className = 'thumbPoster';
-            div.style.backgroundSize = '62px 91px';
+            //div.style.backgroundSize = '62px 91px';
             div.title = title + ' (' + year + ')';
-            div.style.backgroundImage = 'url(' + imageUrl + ')';
+            //div.style.backgroundImage = 'url(' + imageUrl + ')';
             div.textContent = title;
             if(imageUrl === '' || (/poster_default/).test(imageUrl)) {
                 div.style.backgroundImage = '';
             } else {
-                div.style.fontSize = "1px"; // For searching purposes
+                div.style.fontSize = "1px"; // Title very small searching purposes
             }
+            div.appendChild(img);
             return div;
         };
         /**
