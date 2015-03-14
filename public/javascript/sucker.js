@@ -181,13 +181,13 @@
             divTitle.textContent = title;
             if(imageUrl !== '' && !(/poster_default/).test(imageUrl)) {
                 div.appendChild(img);
-                divTitle.style.fontSize = '1px'; // Title very small searching purposes
 
             } else {
                 div.width = '10vw';
                 div.height = div.width * 1.3;
+                div.appendChild(divTitle);
+
             }
-            div.appendChild(divTitle);
             return div;
         };
         /**
