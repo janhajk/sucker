@@ -182,7 +182,7 @@
             if(imageUrl !== '' && !(/poster_default/).test(imageUrl)) {
                 div.appendChild(img);
             } else {
-                title.style.fontSize = '1px'; // Title very small searching purposes
+                divTitle.style.fontSize = '1px'; // Title very small searching purposes
                 div.width = '10vw';
                 div.height = div.width * 1.3;
             }
