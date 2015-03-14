@@ -44,6 +44,8 @@ exports.feeds    = {
              }
 };
 
+exports.keepTime = 10 // days to keep movies in the database
+
 exports.updateIntervalFeeds = 1000*60*20;
 exports.updateIntervalInfos = 10000;
 

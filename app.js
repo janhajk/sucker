@@ -166,14 +166,14 @@ db.connect(function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
         });
-        movie.cleanUp(7, function(){
+        movie.cleanUp(config.keepTime, function(){
         });
     })(), 6000);
     setInterval((function() {
         movie.updateFeeds(function(e) {
             utils.log(e)
         });
-        movie.cleanUp(7, function(){
+        movie.cleanUp(config.keepTime, function(){
         });
     })(), config.updateIntervalFeeds);
     setInterval(movie.cronUpdateInfo, config.updateIntervalInfos);
