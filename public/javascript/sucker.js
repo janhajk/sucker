@@ -177,11 +177,10 @@
             div.className = 'thumbPoster';
             divTitle.title = title + ' (' + year + ')';
             divTitle.className = 'thumbPosterTitle';
-            //div.style.backgroundImage = 'url(' + imageUrl + ')';
             divTitle.textContent = title;
             if(imageUrl === 'http://image.tmdb.org/t/p/w500null' || (/poster_default/).test(imageUrl)) {
                 div.width = '10vw';
-                div.height = div.offsetWidth * 1.3;
+                div.minHeight = '50px';
                 div.appendChild(divTitle);
 
             } else {
