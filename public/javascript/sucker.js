@@ -196,11 +196,10 @@
          */
         var thumbPosterWithInfo = function(imageUrl, title, year, resolutions) {
             var thumb = thumbPoster(imageUrl, title, year);
-            var res = resolutions;
             var divRes = document.createElement('div');
             divRes.className = 'resolutionBar';
-            divRes.textContent = res.join(', ');
-            thumb.appendChild(divRes);
+            divRes.textContent = resolutions.join(', ');
+            //thumb.appendChild(divRes);
             return thumb;
         };
         var thumbPosterWithInfoClickable = function(mData) {
