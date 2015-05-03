@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sucker</title>
 
         <link rel="shortcut icon"    href="/images/favicon_57x57.png" type="image/x-icon" />
@@ -17,67 +19,75 @@
         <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" href="css/styles.css" />
 
-        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     </head>
     <body>
         <div id="status"></div>
         <div id="header">
         </div>
-        <div id="content">
-            <ul>
+        <div class="container-fluid">
+            <ul class="nav nav-tabs" role="tablist">
                 <li><a href="#tabs-1"><div class="icontroll" id="logo"></div></a></li>
                 <li><a href="#tabs-2">links</a></li>
                 <li><a href="#tabs-3">files</a></li>
                 <li><a href="#tabs-4">Parser</a></li>
             </ul>
-            <div id="tabs-1" class="box">
-                <div class="divheader">Latest TV Shows</div><div id="rss_TV">
-                </div>
-                <div class="divheader">Latest Movies</div><div id="rss_Movies">
-                </div>
-            </div>
-            <div id="tabs-2" class="box">
-                <div id="linksDetails">
-                </div>
-                <div id="rssLinks">
-                    <ul>
-                        <li><a href="#tabs-links-mp4">mp4</a></li>
-                        <li><a href="#tabs-links-mkv">mkv</a></li>
-                        <li><a href="#tabs-links-avi">avi</a></li>
-                        <li><a href="#tabs-links-rar">rar</a></li>
-                        <li><a href="#tabs-links-default">*</a></li>
-                    </ul>
-                    <div id="tabs-links-mp4" class="box">
-                        <table><tbody></tbody></table>
+
+            <div class="tab-content">
+                <div id="tabs-1" class="tab-pane fade in active">
+                    <div class="divheader">Latest TV Shows</div><div id="rss_TV">
                     </div>
-                    <div id="tabs-links-mkv" class="box">
-                        <table><tbody></tbody></table>
-                    </div>
-                    <div id="tabs-links-avi" class="box">
-                        <table><tbody></tbody></table>
-                    </div>
-                    <div id="tabs-links-rar" class="box">
-                        <table><tbody></tbody></table>
-                    </div>
-                    <div id="tabs-links-default" class="box">
-                        <table><tbody></tbody></table>
+                    <div class="divheader">Latest Movies</div><div id="rss_Movies">
                     </div>
                 </div>
-            </div>
-            <div id="tabs-3" class="box">
-                <div id="rss_files">
-                    <table>
-                        <thead><tr><th>Filename</th><th width="40"></th><th></th><th></th></tr></thead>
-                        <tbody></tbody>
-                    </table>
+                <div id="tabs-2" class="tab-pane fade">
+                    <div id="linksDetails">
+                    </div>
+                    <div id="rssLinks">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li><a href="#tabs-links-mp4">mp4</a></li>
+                            <li><a href="#tabs-links-mkv">mkv</a></li>
+                            <li><a href="#tabs-links-avi">avi</a></li>
+                            <li><a href="#tabs-links-rar">rar</a></li>
+                            <li><a href="#tabs-links-default">*</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tabs-links-mp4" class="box">
+                                <table><tbody></tbody></table>
+                            </div>
+                            <div id="tabs-links-mkv" class="box">
+                                <table><tbody></tbody></table>
+                            </div>
+                            <div id="tabs-links-avi" class="box">
+                                <table><tbody></tbody></table>
+                            </div>
+                            <div id="tabs-links-rar" class="box">
+                                <table><tbody></tbody></table>
+                            </div>
+                            <div id="tabs-links-default" class="box">
+                                <table><tbody></tbody></table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="tabs-4" class="box">
-                <textarea id="data"></textarea>
-                <textarea id="paste"></textarea>
-                <div id="bParse">
-                    <button type="button" id="go">parse</button>
+                <div id="tabs-3" class="tab-pane fade">
+                    <div id="rss_files">
+                        <table>
+                            <thead><tr><th>Filename</th><th width="40"></th><th></th><th></th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tabs-4" class="tab-pane fade">
+                    <textarea id="data"></textarea>
+                    <textarea id="paste"></textarea>
+                    <div id="bParse">
+                        <button type="button" id="go">parse</button>
+                    </div>
                 </div>
             </div>
         </div>
