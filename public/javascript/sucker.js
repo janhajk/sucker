@@ -174,7 +174,7 @@
             var img = document.createElement('img');
             img.src = imageUrl;
             img.className = 'thumbPosterImg thumb thumbnail';
-            img.style.height = '100px';
+            img.style.height = '200px';
             var divTitle = document.createElement('div');
             var div = document.createElement('div');
             div.className = 'thumbPoster';
