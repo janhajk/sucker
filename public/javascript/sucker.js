@@ -386,9 +386,9 @@
             // update files per extension
             if(extensions.mp4 === 0) {
                 $('.nav-tabs a[href="#tabLinks"]').tab('show');
-            } else $('#rssLinks').tabs({
-                active: 0
-            });
+            } else {
+                $('.nav-tabs a[href="#tabs-links-mkv"]').tab('show');
+            }
             // Update Tab-title counter
             for(var i in extensions) {
                 $('#rssLinks ul:first li:eq(' + (Object.keys(extensions)).indexOf(i) + ') a').text(i + '(' + extensions[i] + ')');
