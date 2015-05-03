@@ -37,10 +37,14 @@
                     return a > b ? -1 : a < b ? 1 : 0;
                 });
                 // Start creating Movie-Thumbs
+                var li;
                 for(i = 0; i < json.length; i++) {
                     div = thumbPosterWithInfoClickable(json[i]);
-                    div.style.float = 'left';
-                    $('#rss_Movies').append(div);
+                    li = document.createElement('li');
+                    li.className = "col-lg-2 col-md-2 col-sm-3 col-xs-4";
+                    li.appendChild('div');
+                    //div.style.float = 'left';
+                    $('#rss_Movies').append(li);
                 }
             }).fail(function(data) {
                 msg.set('Error while loading movies');

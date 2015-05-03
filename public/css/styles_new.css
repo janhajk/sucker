@@ -1,33 +1,7 @@
-#header {
-  overflow:hidden;
-  position:relative;
-  display:table;
-}
-
-#status {
-  position: absolute;
-  display:none;
-  border: black thin solid;
-  z-index: 9999;
-  background-color: #9FEE00;
-  padding: 3px;
-}
-
-#files {
-  max-width: 520px;
-  padding:0px;
-  margin:0px;
-}
-#files table {
-  width:100%;
-}
-
 #logo {
   width: 25px;
   height: 25px;
   background-size: 25px 25px;
-  float:left;
-  cursor: pointer;
 }
 
 
@@ -70,92 +44,4 @@
 
 .icontroll {
   background-image: url('data:image/png;base64,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');
-}
-
-
-
-.movieDigest {
-    padding-bottom: 20px;
-}
-
-.thumbPoster {
-    margin: 5px;
-    border: 1px solid black;
-    text-align: center;
-    hyphens: auto;
-    word-wrap: break-word;
-    float: left;
-}
-.thumbPosterImg {
-    width: 52px;
-    width: 10vw;
-    display: block;
-}
-.thumbPosterTitle {
-    font-size: 10px;
-    width: 10vw;
-    margin-top: -50px;
-}
-
-.resolutionBar {
-    position: relative;
-    font-size: 5pt;
-    color: black;
-    background-color: white;
-    background-color: rgba(255,255,255,0.8);
-    padding-left: 3px;
-    text-align: left;
-}
-
-#linksDetails {
-    padding-bottom: 20px;
-}
-
-.movieInfo {
-
-}
-
-.movieInfoTitle {
-    font-size: 1.5em;
-    margin-bottom: 3px;
-}
-
-.movieInfoLine {
-    font-size: 0.6em;
-    margin-top: 3px;
-    margin-bottom: 3px;
-}
-
-.linkParseSite {
-    cursor: pointer;
-    text-decoration: underline;
-    color: blue;
-    font-size: 0.8em;
-    clear:both;
-}
-
-.hyperlink {
-    cursor: pointer;
-    text-decoration: underline;
-    color: blue;
-    font-size: 0.8em;
-}
-
-.hyperlinkParse {
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-size: 0.6em;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    margin-left: 2px;
-}
-
-.hyperlinkParse:hover {
-    text-decoration: underline;
-    color: red;
-}
-
-#rssLinks {
-    font-size: 0.8em;
 }
