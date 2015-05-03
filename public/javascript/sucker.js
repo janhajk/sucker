@@ -41,8 +41,8 @@
                 for(i = 0; i < json.length; i++) {
                     div = thumbPosterWithInfoClickable(json[i]);
                     li = document.createElement('li');
-                    li.className = "col-lg-2 col-md-2 col-sm-3 col-xs-4";
-                    li.appendChild('div');
+                    li.className = 'col-lg-2 col-md-2 col-sm-3 col-xs-4';
+                    li.appendChild(div);
                     //div.style.float = 'left';
                     $('#rss_Movies').append(li);
                 }
