@@ -107,9 +107,7 @@
             $('#paste').html(data.map(function(elem) {
                 return elem.link;
             }).join(' '));
-            $('#content').tabs({
-                active: 1
-            }); // Jump to tab 1 > links; tabs start with 0 = first tab
+            $('.nav-tabs a[href="#links"]').tab('show');
         };
         /*
          * One Row of FileExplorer
@@ -206,10 +204,7 @@
             div.style.cursor = 'pointer';
             div.onclick = (function(_id, title, info, image, sites, div) {
                 return function() {
-                    // Jump to tab 1 > links; tabs start with 0 = first tab
-                    $('#content').tabs({
-                        active: 1
-                    });
+                    $('.nav-tabs a[href="#links"]').tab('show');
                     $('#linksDetails').empty();
                     $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
                     // Site-Links for ripping links
@@ -280,9 +275,7 @@
             span.onclick = function() {
                 $.getJSON('/movie/' + id + '/hide', function(data) {
                     msg.set('Movie will not be shown anymore!', 'fadeout');
-                    $('#content').tabs({
-                        active: 0
-                    }); // Jump to tab 1 > links
+                    $('.nav-tabs a[href="#home"]').tab('show');
                     thumbDiv.parentNode.removeChild(thumbDiv);
                 });
             }
@@ -388,9 +381,7 @@
             }
             // update files per extension
             if(extensions.mp4 === 0) {
-                $('#rssLinks').tabs({
-                    active: 1
-                });
+                $('.nav-tabs a[href="#links"]').tab('show');
             } else $('#rssLinks').tabs({
                 active: 0
             });
