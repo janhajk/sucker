@@ -110,10 +110,10 @@ var plowdown = function(link) {
  * Download a File to your diskstation
  *
  * @param {String} url The url of the link
- */
+ */  
 var DownloadStation = function(uri) {
     msg.set('start downloading file to Diskstation...');
-    $.ajax({
+    jQuery.ajax({
         type: 'POST',
         url: '/diskstation/DownloadStation',
         data: {method: 'create', uri: uri},
