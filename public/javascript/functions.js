@@ -114,8 +114,8 @@ var plowdown = function(link) {
 var DownloadStation = function(uri) {
     msg.set('start downloading file to Diskstation...');
     $.ajax({
-        type: "POST",
-        url: 'diskstation/DownloadStation',
+        type: 'POST',
+        url: '/diskstation/DownloadStation',
         data: {method: 'create', uri: uri},
         success: function(body) {
             msg.set(body);
