@@ -175,7 +175,7 @@
             img.src = imageUrl;
             img.className = 'thumbPosterImg thumb thumbnail';
             img.style.height = '150px';
-            img.title = title;
+            img.title = title + ' (' + year + ')';
             var divTitle = document.createElement('div');
             var div = document.createElement('div');
             div.className = 'thumbPoster';
