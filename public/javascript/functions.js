@@ -96,7 +96,7 @@ var loadFiles = function() {
 /**
  * Plowdown a File to the server
  *
- * @param {Number} id The ul.to/id
+ * @param {String} id The ul.to/id
  */
 var plowdown = function(link) {
     msg.set('start downloading file to the server...');
@@ -109,13 +109,19 @@ var plowdown = function(link) {
 /**
  * Download a File to your diskstation
  *
- * @param {Number} url The url of the link
+ * @param {String} url The url of the link
  */
 var DownloadStation = function(uri) {
     msg.set('start downloading file to Diskstation...');
-    $.post('diskstation/DownloadStation', {method: 'create', uri: uri}, function(body) {
-        msg.set(body);
-    }, 'json');
+    $.ajax({
+        type: "POST",
+        url: 'diskstation/DownloadStation',
+        data: {method: 'create', uri: uri},
+        success: function(body) {
+            msg.set(body);
+        },
+        dataType: 'json'
+    });
 };
 
 
