@@ -272,18 +272,21 @@
          * Creates a link which removes a movie from future display
          */
         var createElementSpanRemove = function(id, thumbDiv) {
+            var button = document,createElement('div');
+            button.className = 'btn btn-info btn-lg';
             var span = document.createElement('span');
             span.textContent = 'remove';
             span.title = 'don\'t display this movie anymore.';
-            span.className = 'hyperlink';
-            span.onclick = function() {
+            span.className = 'glyphicon glyphicon-trash';
+            div.onclick = function() {
                 $.getJSON('/movie/' + id + '/hide', function(data) {
                     msg.set('Movie will not be shown anymore!', 'fadeout');
                     $('.nav-tabs a[href="#tabHome"]').tab('show');
                     thumbDiv.parentNode.removeChild(thumbDiv);
                 });
-            }
-            return span;
+            };
+            div.appendChild(span)
+            return div;
         };
 
         /*
