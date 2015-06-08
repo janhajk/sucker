@@ -371,7 +371,7 @@
                         console.log(link);
                         DownloadStation(link);
                     };
-                })(link);
+                })(href);
                 tds[4].appendChild(cloud);
                 for(var key in tds) tr.appendChild(tds[key]);
                 return tr;
