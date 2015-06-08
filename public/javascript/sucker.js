@@ -273,7 +273,7 @@
          */
         var createElementSpanRemove = function(id, thumbDiv) {
             var button = document.createElement('div');
-            button.className = 'btn btn-info btn-lg';
+            button.className = 'btn btn-default btn-sm';
             var span = document.createElement('span');
             span.textContent = 'remove';
             span.title = 'don\'t display this movie anymore.';
@@ -293,16 +293,19 @@
          * Creates a link which updates a movie-info
          */
         var createElementSpanUpdate = function(id) {
+            var button = document.createElement('div');
+            button.className = 'btn btn-default btn-sm';
             var span = document.createElement('span');
             span.textContent = 'update';
             span.title = 'update info to this movie';
-            span.className = 'hyperlink';
-            span.onclick = function() {
+            span.className = 'glyphicon glyphicon-trash';
+            button.onclick = function() {
                 $.getJSON('/movie/' + id + '/update', function(data) {
                     msg.set('Movie-Info Updated', 'fadeout');
                 });
-            }
-            return span;
+            };
+            button.appendChild(span)
+            return button;
         };
 
         /*
