@@ -231,7 +231,7 @@
             div.className = 'movieDigest';
             var divOuter = document.createElement('div');
             divOuter.className = 'movieInfo';
-            var divTitle = document.createElement('div');
+            var divTitle = document.createElement('h2');
             divTitle.className = 'movieInfoTitle';
             divTitle.textContent = title;
             var divDetails = document.createElement('div');
