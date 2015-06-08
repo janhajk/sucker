@@ -106,6 +106,18 @@ var plowdown = function(link) {
     }, 'json');
 };
 
+/**
+ * Download a File to your diskstation
+ *
+ * @param {Number} url The url of the link
+ */
+var DownloadStation = function(uri) {
+    msg.set('start downloading file to Diskstation...');
+    $.post('diskstation/DownloadStation', {method: 'create', uri: uri}, function(body) {
+        msg.set(body);
+    }, 'json');
+};
+
 
 Date.prototype.easy = function() {
     var now = new Date();

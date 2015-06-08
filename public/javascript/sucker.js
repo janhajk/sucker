@@ -365,11 +365,11 @@
                 // Download to Server Col
                 var cloud = document.createElement('div');
                 cloud.className = 'icon iconcloud';
-                cloud.title = 'download to server';
+                cloud.title = 'download to diskstation';
                 cloud.onclick = (function(link) {
                     return function() {
                         console.log(link);
-                        plowdown(link);
+                        DownloadStation(link);
                     };
                 })(link);
                 tds[4].appendChild(cloud);

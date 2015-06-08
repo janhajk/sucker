@@ -21,6 +21,14 @@ exports.tomatoesMaxQueriesPerSecond = 8;
 exports.theMovieDbApiKey = '';
 exports.tmdbMaxQueriesPerSecond = 8;
 
+exports.diskstation.url = 'example.com';
+exports.diskstation.port = '5001'
+exports.diskstation.scheme = 'https';
+exports.diskstation.username = 'user1';
+exports.diskstation.password = 'password1';
+
+
+
 exports.feeds    = {
   TV     : {feeds: [
                 'http://www.scnsrc.me/tv/feed/',
