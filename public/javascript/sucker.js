@@ -272,7 +272,7 @@
          * Creates a link which removes a movie from future display
          */
         var createElementSpanRemove = function(id, thumbDiv) {
-            var button = document,createElement('div');
+            var button = document.createElement('div');
             button.className = 'btn btn-info btn-lg';
             var span = document.createElement('span');
             span.textContent = 'remove';
