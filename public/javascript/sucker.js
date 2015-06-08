@@ -368,7 +368,6 @@
                 cloud.title = 'download to diskstation';
                 cloud.onclick = (function(link) {
                     return function() {
-                        console.log(link);
                         DownloadStation(link);
                     };
                 })(href);

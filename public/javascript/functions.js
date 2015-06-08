@@ -110,7 +110,7 @@ var plowdown = function(link) {
  * Download a File to your diskstation
  *
  * @param {String} url The url of the link
- */  
+ */
 var DownloadStation = function(uri) {
     msg.set('start downloading file to Diskstation...');
     jQuery.ajax({
@@ -118,7 +118,12 @@ var DownloadStation = function(uri) {
         url: '/diskstation/DownloadStation',
         data: {method: 'create', uri: uri},
         success: function(body) {
-            msg.set(body);
+            if (body.success) {
+                msg.set('Successfull added url to Download Station cue.');
+            }
+            else {
+                msg.set('There was an error when trying to add url to Download Station cue!');
+            }
         },
         dataType: 'json'
     });
