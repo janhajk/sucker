@@ -1,6 +1,31 @@
 (function() {
     $(document).ready(function() {
         /*
+         * Loads the list of Downloaded files that are on the server
+         */
+        var loadFiles = function() {
+            $.ajax({
+                url: '/files',
+                type: 'get',
+                cache: false,
+                dataType: 'json'
+            }).done(function(data){
+                $('#rss_files tbody').empty();
+                // Sort files by Filename
+                data.sort(function(a, b) {
+                    a = a.filename.toLowerCase();
+                    b = b.filename.toLowerCase();
+                    return a > b ? 1 : a < b ? -1 : 0;
+                });
+                var tr, td = [], a, icon, del, s, i;
+                for(i in data) {
+                    $('#rss_files tbody').append(fileRow(data[i]));
+                }
+            }).fail(function(){
+
+            });
+        };
+        /*
          * Loads List of TV-Shows direct from monitored RSS
          *
          */
@@ -113,31 +138,7 @@
             }).join(' '));
             $('.nav-tabs a[href="#tabLinks"]').tab('show');
         };
-        /*
-         * Loads the list of Downloaded files that are on the server
-         */
-        var loadFiles = function() {
-            $.ajax({
-                url: '/files',
-                type: 'get',
-                cache: false,
-                dataType: 'json'
-            }).done(function(data){
-                $('#rss_files tbody').empty();
-                // Sort files by Filename
-                data.sort(function(a, b) {
-                    a = a.filename.toLowerCase();
-                    b = b.filename.toLowerCase();
-                    return a > b ? 1 : a < b ? -1 : 0;
-                });
-                var tr, td = [], a, icon, del, s, i;
-                for(i in data) {
-                    $('#rss_files tbody').append(fileRow(data[i]));
-                }
-            }).fail(function(){
 
-            });
-        };
 
         /*
          * One Row of FileExplorer
