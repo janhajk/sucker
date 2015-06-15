@@ -209,7 +209,7 @@
             divTitle.title = title + ' (' + year + ')';
             divTitle.className = 'thumbPosterTitle';
             divTitle.textContent = title;
-            if(imageUrl === 'http://image.tmdb.org/t/p/w500null' || (/poster_default/).test(imageUrl)) {
+            if(imageUrl === 'http://image.tmdb.org/t/p/w500null' || imageUrl === '' || (/poster_default/).test(imageUrl)) {
                 img.src = '/images/default.jpg';
                 //div.appendChild(divTitle);
 
