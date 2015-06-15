@@ -210,13 +210,11 @@
             divTitle.className = 'thumbPosterTitle';
             divTitle.textContent = title;
             if(imageUrl === 'http://image.tmdb.org/t/p/w500null' || (/poster_default/).test(imageUrl)) {
-                div.width = '100px';
-                div.style.minHeight = '150px';
+                img.src = '/images/default.jpg';
                 //div.appendChild(divTitle);
 
-            } else {
-                div.appendChild(img);
             }
+            div.appendChild(img);
             return div;
         };
         /**
