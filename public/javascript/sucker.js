@@ -326,7 +326,7 @@
             var span = document.createElement('span');
             span.textContent = 'update';
             span.title = 'update info to this movie';
-            span.className = 'glyphicon glyphicon-update';
+            span.className = 'glyphicon glyphicon-refresh';
             button.onclick = function() {
                 $.getJSON('/movie/' + id + '/update', function(data) {
                     msg.set('Movie-Info Updated', 'fadeout');
