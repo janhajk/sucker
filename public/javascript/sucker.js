@@ -436,7 +436,7 @@
                         url: '/site/links',
                         type: 'POST',
                         data: {
-                            sites: [data]
+                            sites: [{link:data}]
                         },
                         cache: false,
                         dataType: 'json'
