@@ -325,7 +325,7 @@
                 $.getJSON('/movie/' + id + '/hide', function(data) {
                     for (var i = 0; i<movies.length;i++) {
                         if (movies[i]._id === id) {
-                            movies = movies.splice(i,1);
+                            movies.splice(i,1);
                             break;
                         }
                     }
