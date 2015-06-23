@@ -425,5 +425,30 @@
                 $('#rssLinks ul:first li:eq(' + (Object.keys(extensions)).indexOf(i) + ') a').text(i + '(' + extensions[i] + ')');
             }
         };
+
+        (function(){
+            var bParse = document.getElementById('go');
+            bParse.onclick = function(){
+                var data = document.getElementById('data').value;
+                if (validateURL(data)) {
+                    msg.set('parsing site...');
+                    $.ajax({
+                        url: '/site/links',
+                        type: 'POST',
+                        data: {
+                            sites: [data]
+                        },
+                        cache: false,
+                        dataType: 'json'
+                    }).done(function(onlineLinks){processLinks(onlineLinks)}).fail(function() {
+                        msg.set('Error when checking links!');
+                    });
+                }
+            };
+        })();
+
+
+
+
     });
 })();

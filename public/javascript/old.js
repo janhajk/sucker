@@ -19,7 +19,7 @@
                     parseIDs(ids);
                 }, 'json');
             }
-            else if (/^[a-zA-Z0-9-]{8}/i.test(data) && data !== 'uploaded') { // is ul.to ID
+            else if (validateURL(data) && /^[a-zA-Z0-9-]{8}/i.test(data) && data !== 'uploaded') { // is ul.to ID
                 parseIDs({data: data.substr(0, 8)});
             }
             else { // is string that may contain ul.to links

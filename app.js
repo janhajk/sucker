@@ -156,7 +156,7 @@ app.post('/diskstation/DownloadStation', auth, function(req, res) {
     var diskstation = require(__dirname + '/lib/diskstation.js');
     if (req.body.method === 'create') {
         utils.log('Start downloading: ' + req.body.uri);
-        diskstation.create(req.body.uri, function(body){
+        diskstation.dsDownloadStationCreate(req.body.uri, function(body){
             res.json(body);
         });
     }
