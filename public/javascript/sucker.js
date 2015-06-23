@@ -1,5 +1,7 @@
 (function() {
     $(document).ready(function() {
+        var movies = [];
+
         /*
          * Loads the list of Downloaded files that are on the server
          */
@@ -61,16 +63,8 @@
                     b = new Date(b.lastUpdate);
                     return a > b ? -1 : a < b ? 1 : 0;
                 });
-                // Start creating Movie-Thumbs
-                var li;
-                for(i = 0; i < json.length; i++) {
-                    div = thumbPosterWithInfoClickable(json[i]);
-                    li = document.createElement('li');
-                    li.className = 'col-lg-1 col-md-2 col-sm-3 col-xs-4';
-                    li.appendChild(div);
-                    //div.style.float = 'left';
-                    $('#rss_Movies').append(li);
-                }
+                movies = json;
+                movieGrid(movies);
             }).fail(function(data) {
                 msg.set('Error while loading movies');
             });
@@ -78,6 +72,29 @@
         loadRssTV();
         loadRssMovies();
         loadFiles();
+
+        /*
+         * Creates a grid of all movies clickable
+         *
+         *
+         */
+        var movieGrid = function(movies) {
+            var li, div, container;
+            container = document.getElementById('rss_Movies');
+            // empty container
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            // Insert new movie-thumbs into container
+            for(i = 0; i < movies.length; i++) {
+                div = thumbPosterWithInfoClickable(movies[i]);
+                li = document.createElement('li');
+                li.className = 'col-lg-1 col-md-2 col-sm-3 col-xs-4';
+                li.appendChild(div);
+                container.appendChild(li);
+            }
+        };
+
         /*
          * Creates a siteRow which can be parsed
          *
@@ -306,6 +323,13 @@
             span.className = 'glyphicon glyphicon-trash';
             button.onclick = function() {
                 $.getJSON('/movie/' + id + '/hide', function(data) {
+                    for (var i = 0; i<movies.length;i++) {
+                        if (movies[i]._id === id) {
+                            movies = movies.splice(i,1);
+                            break;
+                        }
+                    }
+                    movieGrid(movies);
                     msg.set('Movie will not be shown anymore!', 'fadeout');
                     $('.nav-tabs a[href="#tabHome"]').tab('show');
                     thumbDiv.parentNode.removeChild(thumbDiv);
@@ -426,6 +450,7 @@
             }
         };
 
+        // Manual parser Button
         (function(){
             var bParse = document.getElementById('go');
             bParse.onclick = function(){
