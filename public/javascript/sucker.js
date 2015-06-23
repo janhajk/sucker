@@ -2,6 +2,14 @@
     $(document).ready(function() {
         var movies = [];
 
+        var getMovieById = function(_id) {
+            for (var i = 0; i<movies.length;i++) {
+                if (movies[i]._id === _id) {
+                    return i;
+                }
+            }
+        };
+
         /*
          * Loads the list of Downloaded files that are on the server
          */
@@ -323,12 +331,8 @@
             span.className = 'glyphicon glyphicon-trash';
             button.onclick = function() {
                 $.getJSON('/movie/' + id + '/hide', function(data) {
-                    for (var i = 0; i<movies.length;i++) {
-                        if (movies[i]._id === id) {
-                            movies.splice(i,1);
-                            break;
-                        }
-                    }
+                    var i = getMovieById(id);
+                    movies.splice(i,1);
                     movieGrid(movies);
                     msg.set('Movie will not be shown anymore!', 'fadeout');
                     $('.nav-tabs a[href="#tabHome"]').tab('show');
