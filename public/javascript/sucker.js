@@ -326,7 +326,7 @@
             var button = document.createElement('div');
             button.className = 'btn btn-default btn-sm';
             var span = document.createElement('span');
-            span.textContent = 'remove';
+            span.textContent = ' remove';
             span.title = 'don\'t display this movie anymore.';
             span.className = 'glyphicon glyphicon-trash';
             button.onclick = function() {
@@ -350,7 +350,7 @@
             var button = document.createElement('div');
             button.className = 'btn btn-default btn-sm';
             var span = document.createElement('span');
-            span.textContent = 'update';
+            span.textContent = ' update';
             span.title = 'update info to this movie';
             span.className = 'glyphicon glyphicon-refresh';
             button.onclick = function() {
