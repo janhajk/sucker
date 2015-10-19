@@ -10,6 +10,7 @@
         "compression": "*",
         "method-override": "*",
         "body-parser": "*",
+        "http-auth": "*",
         "mongoose": "*",
         "xml2js": "*",
         "request": "*",
