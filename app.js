@@ -1,25 +1,31 @@
-var config   = require(__dirname + '/config.js');
-var express  = require('express');
+var config      = require(__dirname + '/config.js');
+
+// Express
+var express     = require('express');
+var compression = require('compression');
+var bodyParser  = require('body-parser');
+
+// Filesystem
 var path     = require('path');
 var fs       = require('fs');
 
+// User
 var hoster   = require(__dirname + '/lib/hoster.js');
 var utils    = require(__dirname + '/lib/utils.js');
 var movie    = require(__dirname + '/lib/movies.js');
 
 var db       = require(__dirname + '/database/database.js');
 
+// Setting up Express
 var app = express();
-app.configure(function(){
-  app.use(express.compress());
-  app.set('port', process.env.PORT || config.port);
-  app.use(express.logger('dev'));
-  app.use(express.json());
-  app.use(express.urlencoded());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
-});
+app.use(compression());
+app.use(methodOverride());                  // simulate DELETE and PUT
+app.use(express.static((path.join(__dirname, 'public'))));
+app.use(bodyParser.json());    // parse application/json
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.listen(process.env.PORT || config.port);
+
 
 // Asynchronous
 var auth = express.basicAuth(function(user, pass, callback) {
