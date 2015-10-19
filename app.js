@@ -5,7 +5,6 @@ var express        = require('express');
 var compression    = require('compression');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var basicAuth      = require('basic-auth-connect');
 var auth           = require('http-auth');
 
 // Filesystem
