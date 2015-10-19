@@ -1,9 +1,10 @@
 var config      = require(__dirname + '/config.js');
 
 // Express
-var express     = require('express');
-var compression = require('compression');
-var bodyParser  = require('body-parser');
+var express        = require('express');
+var compression    = require('compression');
+var bodyParser     = require('body-parser');
+var methodOverride = require('method-override');
 
 // Filesystem
 var path     = require('path');
