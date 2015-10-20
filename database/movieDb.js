@@ -106,31 +106,33 @@ exports.hide = function(movieId, callback) {
 };
 
 var mergeMovies = function(movie1, movie2) {
-    var key1, key2, movie = movie1, i = false, count = 0;
-    // Merge Links and count newly added links
-    utils.log('mergeMovies() in movieDb.js: merging links...');
-    for (key1 in movie2.sites) {
-        i = false;
-        for (key2 in movie1.sites) {
-            if (movie2.sites[key1].link === movie1.sites[key2].link) {
-                i = true;
-                break;
-            }
-        }
-        if (!i) {
-            movie.sites.push(movie2.sites[key1]);
-            count++;
-        }
-    }
-    // Merge resolutions
-    utils.log('mergeMovies() in movieDb.js: merging resolutions...');
-    for (key1 in movie2.resolutions){
-        if (movie1.resolutions.indexOf(movie2.resolutions[key1]) < 0)
-            movie.resolutions.push(movie2.resolutions[key1]);
-    }
-    return {
-        movie:movie,
-        newlinks: count};
+   var key1, key2, movie = movie1, i = false, count = 0;
+   // Merge Links and count newly added links
+   utils.log('mergeMovies() in movieDb.js: merging links...');
+   for (key1 in movie2.sites) {
+      i = false;
+      for (key2 in movie1.sites) {
+         if (movie2.sites[key1].link === movie1.sites[key2].link) {
+            i = true;
+            break;
+         }
+      }
+      if (!i) {
+         movie.sites.push(movie2.sites[key1]);
+         count++;
+      }
+   }
+   // Merge resolutions
+   utils.log('mergeMovies() in movieDb.js: merging resolutions...');
+   for (key1 in movie2.resolutions){
+      utils.log('mergeMovies() in movieDb.js: processing resolution ' + key1 + ':' + movie2.resolutions[key1]);
+      if (movie1.resolutions.indexOf(movie2.resolutions[key1]) < 0)
+         movie.resolutions.push(movie2.resolutions[key1]);
+   }
+   utils.log('mergeMovies() in movieDb.js: merging complete! Returning merged object.');
+   return {
+      movie:movie,
+      newlinks: count};
 };
 exports.mergeMovies = mergeMovies;
 
