@@ -157,7 +157,7 @@ app.get('/files/:filename', ensureAuthenticated, function(req, res) {
  * Delete file
  */
 app.delete('/files/:filename/delete', ensureAuthenticated, function(req, res) {
-    var file = path.join(config.fPath, req.param.filename));
+    var file = path.join(config.fPath, req.param.filename);
     fs.unlink(file, function(err) {
         utils.log('-'); utils.log('Deleted file: ' + file);
         res.json(err);
