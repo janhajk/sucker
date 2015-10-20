@@ -43,9 +43,7 @@ passport.use(new GoogleStrategy({
    clientSecret: config.GOOGLE_CLIENT_SECRET,
    callbackURL: config.baseurl + "/auth/google/callback"
 }, function(accessToken, refreshToken, profile, done) {
-   process.nextTick(function() {
-      return done(null, profile);
-   });
+   utils.log(profile);
 }));
 
 app.get('/auth/google', passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}), function(req, res) {});
