@@ -126,7 +126,7 @@ var mergeMovies = function(movie1, movie2) {
    utils.log('mergeMovies() in movieDb.js: merging resolutions...');
    for (key1 in movie2.resolutions){
       utils.log('mergeMovies() in movieDb.js: processing resolution ' + key1 + ':' + movie2.resolutions[key1]);
-      if (movie1.resolutions.indexOf(movie2.resolutions[key1]) < 0)
+      if (typeof movie2.resolutions[key1] === 'string' && movie1.resolutions.indexOf(movie2.resolutions[key1]) < 0)
          movie.resolutions.push(movie2.resolutions[key1]);
    }
    utils.log('mergeMovies() in movieDb.js: merging complete! Returning merged object.');
