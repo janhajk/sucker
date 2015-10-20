@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var utils    = require(__dirname + '/utils.js');
+var utils    = require(__dirname + '/../lib/utils.js');
 
 var MovieSchema = mongoose.Schema({
     title: { type: String, index: true },
