@@ -5,6 +5,9 @@ var express        = require('express');
 var compression    = require('compression');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var cookieParser   = require('cookie-parser');
+var session        = require('express-session');
+
 
 // Auth
 var passport       = require('passport');
@@ -25,9 +28,14 @@ var db       = require(__dirname + '/database/database.js');
 var app = express();
 app.use(compression());
 app.use(methodOverride());                  // simulate DELETE and PUT
-app.use(express.static((path.join(__dirname, 'public'))));
 app.use(bodyParser.json());    // parse application/json
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.session({ secret: 'asoifdhp94h9hasdp9gfh' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static((path.join(__dirname, 'public'))));
+
 
 app.listen(process.env.PORT || config.port);
 
@@ -44,6 +52,17 @@ passport.use(new GoogleStrategy({
    callbackURL: config.baseurl + "/auth/google/callback"
 }, function(accessToken, refreshToken, profile, done) {
    utils.log(profile);
+   process.nextTick(function() {
+      var id = profile.id;
+      if (id === config.googleUser) {
+         utils.log('Login in user "' + user.displayName + '"');
+         return done(null, user);
+      }
+      else {
+         utils.log('User not authorised!');
+         return done(err);
+      }
+   });
 }));
 
 app.get('/auth/google', passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}), function(req, res) {});

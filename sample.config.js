@@ -1,5 +1,7 @@
 exports.baseurl = 'http://example.com';
 
+exports.googlesuer  'googleUser-id';
+
 exports.username = 'user1';
 exports.password = 'VfKnRe$7gdBf';
 

@@ -19,6 +19,8 @@
         "passport": "0.3.x",
         "passport-google-oauth": "0.2.x",
         "moviedb": "0.2.x",
-        "async": "1.x"
+        "async": "1.x",
+       "cookie-parser", "1.4.x",
+       "express-session": "1.11.x"
     }
 }
