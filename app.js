@@ -157,7 +157,7 @@ app.get('/files/:filename', ensureAuthenticated, function(req, res) {
  * Delete file
  */
 app.delete('/files/:filename/delete', ensureAuthenticated, function(req, res) {
-    var file = path.join(config.fPath, req.param('filename'));
+    var file = path.join(config.fPath, req.param.filename));
     fs.unlink(file, function(err) {
         utils.log('-'); utils.log('Deleted file: ' + file);
         res.json(err);
@@ -169,7 +169,7 @@ app.delete('/files/:filename/delete', ensureAuthenticated, function(req, res) {
  */
 app.get('/plowprobe/:links', ensureAuthenticated, function(req, res){
     var plowprobe = require(__dirname + '/lib/plowshare.js').plowprobe;
-    plowprobe(req.param('links'), function(info){
+    plowprobe(req.params.links, function(info){
         res.json(info);
     });
 });
@@ -190,7 +190,7 @@ app.post('/plowdown', ensureAuthenticated, function(req, res){
  * Hides Movie from View
  */
 app.get('/movie/:id/hide', ensureAuthenticated, function(req, res) {
-    db.movie.hide(req.param('id'), function(success){
+    db.movie.hide(req.params.id, function(success){
         res.json(success);
     });
 });
@@ -199,7 +199,7 @@ app.get('/movie/:id/hide', ensureAuthenticated, function(req, res) {
  * Updates Movie-Info for Movie by mongo-Id
  */
 app.get('/movie/:id/update', ensureAuthenticated, function(req, res) {
-    movie.updateInfoById(req.param('id'), function(success){
+    movie.updateInfoById(req.params.id, function(success){
         res.json(success);
     });
 });
@@ -211,7 +211,7 @@ app.get('/movie/:id/update', ensureAuthenticated, function(req, res) {
  * for developping/testing
  */
 app.get('/:title/info', ensureAuthenticated, function(req, res) {
-    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(imdbInfo) {
+    movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.params.title), function(imdbInfo) {
         res.json(imdbInfo);
     });
 });
