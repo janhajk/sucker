@@ -55,7 +55,7 @@ passport.use(new GoogleStrategy({
    process.nextTick(function() {
       if (profile.id === config.googleUser) {
          utils.log('Login in user "' + profile.displayName + '"');
-         return done(null, user);
+         return done(null, profile);
       }
       else {
          utils.log('User not authorised!');
