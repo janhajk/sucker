@@ -27,7 +27,7 @@ var db       = require(__dirname + '/database/database.js');
 // Setting up Express
 var app = express();
 app.use(compression());
-app.use(methodOverride()); t                 // simulate DELETE and PUT
+app.use(methodOverride());  // simulate DELETE and PUT
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
