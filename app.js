@@ -53,9 +53,8 @@ passport.use(new GoogleStrategy({
 }, function(accessToken, refreshToken, profile, done) {
    utils.log(profile);
    process.nextTick(function() {
-      var id = profile.id;
-      if (id === config.googleUser) {
-         utils.log('Login in user "' + user.displayName + '"');
+      if (profile.id === config.googleUser) {
+         utils.log('Login in user "' + profile.displayName + '"');
          return done(null, user);
       }
       else {
