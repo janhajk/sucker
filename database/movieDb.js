@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var utils    = require(__dirname + '/utils.js');
 
 var MovieSchema = mongoose.Schema({
     title: { type: String, index: true },
@@ -107,6 +108,7 @@ exports.hide = function(movieId, callback) {
 var mergeMovies = function(movie1, movie2) {
     var key1, key2, movie = movie1, i = false, count = 0;
     // Merge Links and count newly added links
+    utils.log('mergeMovies() in movieDb.js: merging links...');
     for (key1 in movie2.sites) {
         i = false;
         for (key2 in movie1.sites) {
@@ -121,6 +123,7 @@ var mergeMovies = function(movie1, movie2) {
         }
     }
     // Merge resolutions
+    utils.log('mergeMovies() in movieDb.js: merging resolutions...');
     for (key1 in movie2.resolutions){
         if (movie1.resolutions.indexOf(movie2.resolutions[key1]) < 0)
             movie.resolutions.push(movie2.resolutions[key1]);
