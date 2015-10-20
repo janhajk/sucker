@@ -82,18 +82,18 @@ function ensureAuthenticated(req, res, next) {
 // Router
 
 app.get('/', function(req, res){
-   fs.readFile(__dirname + '/public/login.html', 'utf-8', function (err, data){
+   fs.readFile(__dirname + '/public/index.html', 'utf-8', function (err, data){
       res.send(data);
    });
 });
 app.get('/login', function(req, res){
-   fs.readFile(__dirname + '/public/login.html', 'utf-8', function (err, data){
+   fs.readFile(__dirname + '/public/index.html', 'utf-8', function (err, data){
       res.send(data);
    });
 });
 
 app.get('/start', ensureAuthenticated, function(req, res) {
-    fs.readFile(__dirname + '/public/index.html', 'utf-8', function (err, data) {
+    fs.readFile(__dirname + '/public/start.html', 'utf-8', function (err, data) {
         res.send(data);
     });
 });
