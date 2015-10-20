@@ -31,7 +31,7 @@ app.use(methodOverride());                  // simulate DELETE and PUT
 app.use(bodyParser.json());    // parse application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.session({ secret: 'asoifdhp94h9hasdp9gfh' }));
+app.use(session({genid: function(req) {return genuuid()},secret: 'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static((path.join(__dirname, 'public'))));
