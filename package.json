@@ -7,16 +7,18 @@
     },
     "dependencies": {
         "express": "4.x",
-        "compression": "*",
-        "method-override": "*",
-        "body-parser": "*",
-        "http-auth": "*",
-        "mongoose": "*",
-        "xml2js": "*",
-        "request": "*",
-        "imdb-api": "*",
+        "compression": "1.x",
+        "method-override": "2.x",
+        "body-parser": "1.x",
+        "http-auth": "2.x",
+        "mongoose": "4.x",
+        "xml2js": "0.4.x",
+        "request": "2.x",
+        "imdb-api": "1.3.x",
         "google": "*",
-        "moviedb": "*",
-        "async": "*"
+        "passport": "0.3.x",
+        "passport-google-oauth": "0.2.x",
+        "moviedb": "0.2.x",
+        "async": "1.x"
     }
 }

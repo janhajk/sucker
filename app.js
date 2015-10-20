@@ -5,7 +5,10 @@ var express        = require('express');
 var compression    = require('compression');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var auth           = require('http-auth');
+
+// Auth
+var passport       = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // Filesystem
 var path     = require('path');
@@ -28,15 +31,52 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.listen(process.env.PORT || config.port);
 
-var basic = auth.basic({
-   realm: "Sucker"
-}, function(username, password, callback) { // Custom authentication method.
-   callback(user === config.username && pass === config.password);
+// Authentication
+passport.serializeUser(function(user, done) {
+   done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+   done(null, obj);
+});
+passport.use(new GoogleStrategy({
+   clientID: config.GOOGLE_CLIENT_ID,
+   clientSecret: config.GOOGLE_CLIENT_SECRET,
+   callbackURL: config.baseurl + "/auth/google/callback"
+}, function(accessToken, refreshToken, profile, done) {
+   process.nextTick(function() {
+      return done(null, profile);
+   });
+}));
+
+app.get('/auth/google', passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}), function(req, res) {});
+app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), function(req, res) {
+   res.redirect('/start');
+});
+app.get('/logout', function(req, res) {
+   req.logout();
+   res.redirect('/login');
 });
 
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+}
 
 
-app.get('/', auth.connect(basic), function(req, res) {
+// Router
+
+app.get('/', function(req, res){
+   fs.readFile(__dirname + '/public/login.html', 'utf-8', function (err, data){
+      res.send(data);
+   });
+});
+app.get('/login', function(req, res){
+   fs.readFile(__dirname + '/public/login.html', 'utf-8', function (err, data){
+      res.send(data);
+   });
+});
+
+app.get('/start', ensureAuthenticated, function(req, res) {
     fs.readFile(__dirname + '/public/index.html', 'utf-8', function (err, data) {
         res.send(data);
     });
@@ -44,14 +84,14 @@ app.get('/', auth.connect(basic), function(req, res) {
 
 
 
-app.get('/tv', auth.connect(basic), function(req, res) {
+app.get('/tv', ensureAuthenticated, function(req, res) {
     utils.rssGet('TV', function(items) {
         items.sort(function(a,b){a=a.title.toLowerCase();b=b.title.toLowerCase();return a>b?1:a<b?-1:0;});
         res.json(items);
     });
 });
 
-app.get('/movies', auth.connect(basic), function(req, res) {
+app.get('/movies', ensureAuthenticated, function(req, res) {
     db.movie.get(function(err, movies) {
         res.json(movies);
     });
@@ -60,7 +100,7 @@ app.get('/movies', auth.connect(basic), function(req, res) {
 /**
  * rip content from [sites] and return all premium links
  */
-app.post('/site/links', auth.connect(basic), function(req, res) {
+app.post('/site/links', ensureAuthenticated, function(req, res) {
     var engine   = require(__dirname + '/lib/engine.js');
     engine.linkEngine(req.body.sites, function(content){
         res.json(content);
@@ -71,7 +111,7 @@ app.post('/site/links', auth.connect(basic), function(req, res) {
 /**
  * gets a List of all downloaded Files on server
  */
-app.get('/files', auth.connect(basic), function(req, res) {
+app.get('/files', ensureAuthenticated, function(req, res) {
     res.json(utils.getDownloadedFiles());
 });
 
@@ -80,7 +120,7 @@ app.get('/files', auth.connect(basic), function(req, res) {
 /**
  * Send single file to client for downloading
  */
-app.get('/files/:filename', auth.connect(basic), function(req, res) {
+app.get('/files/:filename', ensureAuthenticated, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     utils.log('-');
     utils.log('sending file \'' + file + '\' to client...');
@@ -100,7 +140,7 @@ app.get('/files/:filename', auth.connect(basic), function(req, res) {
 /**
  * Delete file
  */
-app.delete('/files/:filename/delete', auth.connect(basic), function(req, res) {
+app.delete('/files/:filename/delete', ensureAuthenticated, function(req, res) {
     var file = path.join(config.fPath, req.param('filename'));
     fs.unlink(file, function(err) {
         utils.log('-'); utils.log('Deleted file: ' + file);
@@ -111,7 +151,7 @@ app.delete('/files/:filename/delete', auth.connect(basic), function(req, res) {
 /**
  * Checks if a File still exists on File-Hoster and returns info about file
  */
-app.get('/plowprobe/:links', auth.connect(basic), function(req, res){
+app.get('/plowprobe/:links', ensureAuthenticated, function(req, res){
     var plowprobe = require(__dirname + '/lib/plowshare.js').plowprobe;
     plowprobe(req.param('links'), function(info){
         res.json(info);
@@ -121,7 +161,7 @@ app.get('/plowprobe/:links', auth.connect(basic), function(req, res){
 /**
  * Downloads a file to the server
  */
-app.post('/plowdown', auth.connect(basic), function(req, res){
+app.post('/plowdown', ensureAuthenticated, function(req, res){
     var plowdown = require(__dirname + '/lib/plowshare.js').plowdown;
     utils.log('Start downloading: ' + req.body.link);
     plowdown(req.body.link, function(success){
@@ -133,7 +173,7 @@ app.post('/plowdown', auth.connect(basic), function(req, res){
 /**
  * Hides Movie from View
  */
-app.get('/movie/:id/hide', auth.connect(basic), function(req, res) {
+app.get('/movie/:id/hide', ensureAuthenticated, function(req, res) {
     db.movie.hide(req.param('id'), function(success){
         res.json(success);
     });
@@ -142,7 +182,7 @@ app.get('/movie/:id/hide', auth.connect(basic), function(req, res) {
 /**
  * Updates Movie-Info for Movie by mongo-Id
  */
-app.get('/movie/:id/update', auth.connect(basic), function(req, res) {
+app.get('/movie/:id/update', ensureAuthenticated, function(req, res) {
     movie.updateInfoById(req.param('id'), function(success){
         res.json(success);
     });
@@ -154,14 +194,14 @@ app.get('/movie/:id/update', auth.connect(basic), function(req, res) {
  * fetch Movie Info
  * for developping/testing
  */
-app.get('/:title/info', auth.connect(basic), function(req, res) {
+app.get('/:title/info', ensureAuthenticated, function(req, res) {
     movie.getTomatoesFromTitle(movie.getFilmTitleFromString(req.param('title')), function(imdbInfo) {
         res.json(imdbInfo);
     });
 });
 
 
-app.post('/diskstation/DownloadStation', auth.connect(basic), function(req, res) {
+app.post('/diskstation/DownloadStation', ensureAuthenticated, function(req, res) {
     var diskstation = require(__dirname + '/lib/diskstation.js');
     if (req.body.method === 'create') {
         utils.log('Start downloading: ' + req.body.uri);

@@ -1,3 +1,5 @@
+exports.baseurl = 'http://example.com';
+
 exports.username = 'user1';
 exports.password = 'VfKnRe$7gdBf';
 
@@ -20,6 +22,9 @@ exports.tomatoesMaxQueriesPerSecond = 8;
 
 exports.theMovieDbApiKey = '';
 exports.tmdbMaxQueriesPerSecond = 8;
+
+epxorts.GOOGLE_CLIENT_ID = "--insert-google-client-id-here--";
+epxorts.GOOGLE_CLIENT_SECRET = "--insert-google-client-secret-here--";
 
 exports.diskstation.url = 'example.com';
 exports.diskstation.port = '5001'
