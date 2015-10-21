@@ -253,31 +253,33 @@
             //thumb.appendChild(divRes);
             return thumb;
         };
-        var thumbPosterWithInfoClickable = function(mData) {
-            imgUrl = mData.info.posters !== undefined ? mData.info.posters.thumbnail : '';
-            var div = thumbPosterWithInfo(imgUrl, mData.title, mData.info.year, mData.resolutions);
-            var trash = buttonTrash(mData._id);
-            trash.style.marginTop = '-160px';
-            trash.style.marginLeft = '10px';
-            div.appendChild(trash);
-            div.style.cursor = 'pointer';
-            div.onclick = (function(_id, title, info, image, sites, div) {
-                return function() {
-                    $('.nav-tabs a[href="#tabLinks"]').tab('show');
-                    $('#linksDetails').empty();
-                    $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
-                    // Site-Links for ripping links
-                    var linkList = document.getElementById('linksDetails');
-                    // Link to Rip all links at the same time
-                    linkList.appendChild(siteRow(sites));
-                    // Single Links that can be parsed
-                    for(var key in sites) {
-                        linkList.appendChild(siteRow(sites[key]));
-                    }
-                };
-            })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
-            return div;
-        };
+       var thumbPosterWithInfoClickable = function(mData) {
+          imgUrl = mData.info.posters !== undefined ? mData.info.posters.thumbnail : '';
+          var uberDiv = document.createElement('div');
+          var div = thumbPosterWithInfo(imgUrl, mData.title, mData.info.year, mData.resolutions);
+          var trash = buttonTrash(mData._id);
+          trash.style.marginTop = '-160px';
+          trash.style.marginLeft = '10px';
+          uberDiv.appendChild(trash);
+          div.style.cursor = 'pointer';
+          div.onclick = (function(_id, title, info, image, sites, div) {
+             return function() {
+                $('.nav-tabs a[href="#tabLinks"]').tab('show');
+                $('#linksDetails').empty();
+                $('#linksDetails').append(divMovieInfo(_id, title, image, info.runtime ? info.runtime : '?', info.year, 'imdb-Rating', info.synopsis === '' ? 'no synopsis' : info.synopsis, 'actors', div));
+                // Site-Links for ripping links
+                var linkList = document.getElementById('linksDetails');
+                // Link to Rip all links at the same time
+                linkList.appendChild(siteRow(sites));
+                // Single Links that can be parsed
+                for(var key in sites) {
+                   linkList.appendChild(siteRow(sites[key]));
+                }
+             };
+          })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
+          uberDiv.appendChild(div)
+          return uberDiv;
+       };
        /*
         * Little trash icon to place on poster
         */
