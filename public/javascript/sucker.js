@@ -292,6 +292,7 @@
           var span = document.createElement('span');
           span.className = 'glyphicon glyphicon-trash';
           a.title = 'don\'t display this movie anymore.';
+          a.href = 'javascript:';
           a.onclick = function() {
              $.getJSON('/movie/' + id + '/hide', function(data) {
                 var i = getMovieById(id);
