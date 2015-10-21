@@ -259,6 +259,8 @@
             var trash = buttonTrash(mData._id);
             trash.style.left = '0px';
             trash.style.top = '0px';
+            trash.style.marginTop = '-160px';
+            trash.style.marginLeft = '10px';
             trash.style.position = 'relative';
             div.appendChild(trash);
             div.style.cursor = 'pointer';
