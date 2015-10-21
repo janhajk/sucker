@@ -256,6 +256,11 @@
         var thumbPosterWithInfoClickable = function(mData) {
             imgUrl = mData.info.posters !== undefined ? mData.info.posters.thumbnail : '';
             var div = thumbPosterWithInfo(imgUrl, mData.title, mData.info.year, mData.resolutions);
+            var trash = buttonTrash(mData._id);
+            trash.style.left = '0px';
+            trash.style.top = '0px';
+            trash.style.position = 'relative';
+            div.appendChild(trash);
             div.style.cursor = 'pointer';
             div.onclick = (function(_id, title, info, image, sites, div) {
                 return function() {
@@ -274,6 +279,29 @@
             })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
             return div;
         };
+       /*
+        * Little trash icon to place on poster
+        */
+       var buttonTrash = function(id) {
+          var div = document.createElement('div');
+          var a   = document.createElement('a');
+          var span = document.createElement('span');
+          span.className = 'glyphicon glyphicon-trash';
+          a.title = 'don\'t display this movie anymore.';
+          a.onclick = function() {
+             $.getJSON('/movie/' + id + '/hide', function(data) {
+                var i = getMovieById(id);
+                movies.splice(i,1);
+                movieGrid(movies);
+                msg.set('Movie will not be shown anymore!', 'fadeout');
+                $('.nav-tabs a[href="#tabHome"]').tab('show');
+                thumbDiv.parentNode.removeChild(thumbDiv);
+             });
+          };
+          a.appendChild(span);
+          div.appendChild(a);
+          return div;
+       };
         /**
          * Creates the Movie-Info-Card
          */
@@ -320,7 +348,7 @@
             return span;
         };
         /**
-         * Creates a link which removes a movie from future display
+         * Creates a trash-button which removes a movie from future display
          */
         var createElementSpanRemove = function(id, thumbDiv) {
             var button = document.createElement('div');
