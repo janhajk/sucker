@@ -257,11 +257,8 @@
             imgUrl = mData.info.posters !== undefined ? mData.info.posters.thumbnail : '';
             var div = thumbPosterWithInfo(imgUrl, mData.title, mData.info.year, mData.resolutions);
             var trash = buttonTrash(mData._id);
-            trash.style.left = '0px';
-            trash.style.top = '0px';
             trash.style.marginTop = '-160px';
             trash.style.marginLeft = '10px';
-            trash.style.position = 'relative';
             div.appendChild(trash);
             div.style.cursor = 'pointer';
             div.onclick = (function(_id, title, info, image, sites, div) {
@@ -297,11 +294,13 @@
                 movieGrid(movies);
                 msg.set('Movie will not be shown anymore!', 'fadeout');
                 $('.nav-tabs a[href="#tabHome"]').tab('show');
-                thumbDiv.parentNode.removeChild(thumbDiv);
              });
           };
           a.appendChild(span);
           div.appendChild(a);
+          div.style.left = '0px';
+          div.style.top = '0px';
+          div.style.position = 'relative';
           return div;
        };
         /**
