@@ -260,7 +260,6 @@
           var trash = buttonTrash(mData._id);
           trash.style.marginTop = '-160px';
           trash.style.marginLeft = '10px';
-          uberDiv.appendChild(trash);
           div.style.cursor = 'pointer';
           div.onclick = (function(_id, title, info, image, sites, div) {
              return function() {
@@ -277,7 +276,11 @@
                 }
              };
           })(mData._id, mData.title, mData.info, imgUrl, mData.sites, div);
-          uberDiv.appendChild(div)
+          div.style.position = 'relative';
+          div.style.left = '0';
+          div.style.top = '0';
+          uberDiv.appendChild(div);
+          uberDiv.appendChild(trash);
           return uberDiv;
        };
        /*
