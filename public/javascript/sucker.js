@@ -279,7 +279,7 @@
          div.style.position = 'relative';
          div.style.left = '0';
          div.style.top = '0';
-         uberDiv.style.height = '100px';
+         uberDiv.style.height = '120px';
          uberDiv.appendChild(div);
          uberDiv.appendChild(trash);
          return uberDiv;
